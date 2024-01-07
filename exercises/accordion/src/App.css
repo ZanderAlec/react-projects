@@ -1,0 +1,48 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container{
+  padding-top: 3rem;
+}
+
+.quest-container{
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 60%;
+  padding: 1rem 1rem;
+  
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.quest-open{
+  border-top: 3px solid green;
+}
+
+.green{
+  color: green;
+}
+
+.quest-num{
+  margin-right: 1rem;
+}
+
+.quest-bttm{
+  display: inline-block;
+  text-align: right;
+  border: none;
+  font-size: 1.2rem;
+  background: none;
+
+}
+
+.quest-p{
+  width: 80%;
+  margin: 1rem auto;
+}
