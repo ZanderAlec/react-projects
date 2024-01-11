@@ -29,32 +29,45 @@ function App() {
 
 //Recebe uma lista (data) como prop, de forma que pode ser reutilizado para diferentes listas.
 const Accordeon = ({ data }) => {
+
+  const [isOpen, setIsOpen] = useState(null);
+
   return (
   <div className="container">
     {data.map((quest, index) => {
-      return <Question question = {quest} index = {index} key = {quest.title} />
+      return <Question 
+                question = {quest} 
+                index = {index} 
+                key = {quest.title} 
+                isOpen = {isOpen}
+                setIsOpen = {setIsOpen}
+              />
     })}
   </div>
   );
 }
 
-const Question = ({index, question}) =>{
+const Question = ({index, question, isOpen, setIsOpen}) =>{
 
-  const [isOpen, setIsOpen] = useState(false);
+  const open = isOpen === index;
+
+  const openCloseItem = () => {
+    setIsOpen(open ? null :  index);
+  }
 
   return (
-    <div className={`quest-container ${ isOpen && 'quest-open' }`} >
+    <div className={`quest-container ${ open && 'quest-open' }`} >
       <div className="flex">
-          <div className={ `${isOpen && 'green'} flex`}>
+          <div className={ `${open && 'green'} flex`}>
             <h2 className = "quest-num" > { index < 9 ? `0${index+1}` : index+1 }</h2>
             <h2 className="quest-title"> { question.title } </h2> 
           </div>
           
 
-        <button className= { "quest-bttm" } onClick={ () => setIsOpen(!isOpen) }> { isOpen ? "-" : "+" } </button>
+        <button className= { "quest-bttm" } onClick={ () => openCloseItem() }> { open ? "-" : "+" } </button>
       </div>
       
-      {isOpen && <p className="quest-p"> { question.answer } </p>}
+      {open && <p className="quest-p"> { question.answer } </p>}
       
     </div>
   );
