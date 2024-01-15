@@ -37,6 +37,7 @@ body{
 }
 
 .choice-icon{
+  text-align: center;
   border: 1px solid black;
   border-radius: 100%;
   padding: 1rem;
@@ -57,10 +58,11 @@ body{
   background-color: white;
 }
 
-.choice-bttm:hover{
+.choice-bttm:hover, .clicked{
   background-color: rgb(105, 218, 253);
   cursor: pointer;
 }
+
 
 .confirm-bttm{
   display: block;

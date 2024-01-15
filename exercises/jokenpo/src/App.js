@@ -1,11 +1,28 @@
 import './App.css';
+import { useState, createContext, useContext } from 'react';
+
+const options = [
+  {id: 1, icon: "👊"},
+  {id: 2, icon: "✋"},
+  {id: 3, icon: "✌"}
+];
+
+export const  AppContext = createContext();
 
 function App() {
+  const [choice, setChoice] = useState(0);
+  const [confirm, setConfirm] = useState(false);
+
   return (
     <div className="container">
-        <DisplayScore/>
-        <DisplayChoice/>
-        <ChoiceBttms/>
+
+        <DisplayScore />
+
+        <AppContext.Provider value = {{choice, setChoice, options, confirm, setConfirm}}>
+          <DisplayChoice />
+          <ChoiceBttms />
+        </AppContext.Provider>
+
     </div>
   );
 }
@@ -19,6 +36,7 @@ const DisplayScore = () => {
 }
 
 const Score = ({name, score}) => {
+
   return <div className='score'>
     <h2>{name}:</h2>
     <h2 >{score > 9? score : `0${score}`}  </h2>
@@ -26,36 +44,52 @@ const Score = ({name, score}) => {
 }
 
 const DisplayChoice = () => {
+  const { options, choice, confirm} = useContext(AppContext);
+
   return <div className="flex-row">
-    <Choice choice = '🖐'/>
+    <Choice choice = {confirm && options[choice-1].icon}/>
     <Choice choice = "🖐"/>
   </div>
 }
 
 const Choice = ({choice}) => {
   return <div className="choice">
-    <div className='choice-icon'>{choice? choice : "?" }</div>
+    <div className='choice-icon'>{choice? choice : "❓" }</div>
   </div>
 }
 
 
 const ChoiceBttms = () => {
+  const { options, setConfirm } = useContext(AppContext);
+
+  
+
   return (
     <div className='choices'>
       <div className='flex-row'>
-        <ChoiceBttm text = "👊"/>
-        <ChoiceBttm text = "✋"/>
-        <ChoiceBttm text = "✌"/>
+        {options.map((option) => {
+          return (
+            <ChoiceBttm  id = {option.id} > 
+              {option.icon}
+            </ChoiceBttm>
+            );
+        })}
+
       </div>
 
-      <button className="confirm-bttm">Confirm</button>
+
+      <button onClick = {() => {setConfirm(true)}} className="confirm-bttm">Confirm</button>
     </div>
   );
 }
 
-const ChoiceBttm = ({text}) => {
-  return <div className='choice-bttm'> 
-    {text}
+const ChoiceBttm = ({id, children}) => {
+
+  const { choice, setChoice } = useContext(AppContext);
+  const clicked = choice === id ? true : false;
+
+  return <div  onClick = {() => {setChoice(id)}} className={`choice-bttm ${clicked && "clicked"}`}> 
+    {children}
   </div>  
 }
 
