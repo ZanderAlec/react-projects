@@ -10,19 +10,18 @@ const options = [
 export const  AppContext = createContext();
 
 function App() {
-  const [choice, setChoice] = useState(0);
+  const [choice, setChoice] = useState(null);
   const [confirm, setConfirm] = useState(false);
 
   return (
     <div className="container">
 
-        <DisplayScore />
-
         <AppContext.Provider value = {{choice, setChoice, options, confirm, setConfirm}}>
+          <DisplayScore/>
           <DisplayChoice />
           <ChoiceBttms />
         </AppContext.Provider>
-
+       
     </div>
   );
 }
@@ -35,6 +34,8 @@ const DisplayScore = () => {
     </div>);
 }
 
+
+
 const Score = ({name, score}) => {
 
   return <div className='score'>
@@ -43,12 +44,17 @@ const Score = ({name, score}) => {
   </div>
 }
 
+function setBotChoice(){
+  return Math.floor(Math.random() * 3);
+}
+
+
 const DisplayChoice = () => {
   const { options, choice, confirm} = useContext(AppContext);
 
   return <div className="flex-row">
     <Choice choice = {confirm && options[choice-1].icon}/>
-    <Choice choice = "🖐"/>
+    <Choice choice = {confirm && options[setBotChoice()].icon}/>
   </div>
 }
 
@@ -60,9 +66,7 @@ const Choice = ({choice}) => {
 
 
 const ChoiceBttms = () => {
-  const { options, setConfirm } = useContext(AppContext);
-
-  
+  const { options} = useContext(AppContext);
 
   return (
     <div className='choices'>
@@ -77,18 +81,26 @@ const ChoiceBttms = () => {
 
       </div>
 
-
-      <button onClick = {() => {setConfirm(true)}} className="confirm-bttm">Confirm</button>
+      <ConfirmChoiceBttm/>
     </div>
   );
 }
 
+const ConfirmChoiceBttm = () => {
+  const { setConfirm, choice} = useContext(AppContext);
+  return <button 
+    onClick = {() => setConfirm(true)} 
+    className="confirm-bttm"
+    disabled = {!choice}
+    >Confirm</button>
+}
+
 const ChoiceBttm = ({id, children}) => {
 
-  const { choice, setChoice } = useContext(AppContext);
+  const { choice, setChoice, confirm } = useContext(AppContext);
   const clicked = choice === id ? true : false;
 
-  return <div  onClick = {() => {setChoice(id)}} className={`choice-bttm ${clicked && "clicked"}`}> 
+  return <div  onClick = {() => { !confirm && setChoice(id)}} className={`choice-bttm ${clicked && "clicked"}`}> 
     {children}
   </div>  
 }

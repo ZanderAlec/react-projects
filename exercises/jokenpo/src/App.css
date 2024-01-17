@@ -6,6 +6,7 @@
 
 body{
   background-color: rgb(237, 236, 234);
+  position: relative;
 }
 
 .container{
@@ -79,6 +80,12 @@ body{
   cursor: pointer;
   background-color: rgb(41, 41, 178);
 }
+
+.confirm-bttm:disabled{
+  cursor:default;
+  background-color: rgb(157, 157, 158);
+}
+
 
 
 
