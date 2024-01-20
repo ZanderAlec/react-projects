@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useEffect, useRef   } from 'react';
 
 const options = [
   {id: 1, icon: "👊"},
@@ -11,32 +11,45 @@ export const  AppContext = createContext();
 
 function App() {
   const [choice, setChoice] = useState(null);
+  const [botChoice, setBotChoice] = useState(null);
   const [confirm, setConfirm] = useState(false);
+  const [score, setScore] = useState({user: 0, bot: 0});
+
+  const GenerateBotChoice = ()=>{
+    setBotChoice(Math.floor(Math.random() * 3 )+ 1)
+  }
+
 
   return (
-    <div className="container">
+    <AppContext.Provider value = {{choice, botChoice, setBotChoice, GenerateBotChoice, setChoice, options, confirm, setConfirm, score, setScore}}>
+      <div className="app">
 
-        <AppContext.Provider value = {{choice, setChoice, options, confirm, setConfirm}}>
+        <div className="container">
           <DisplayScore/>
           <DisplayChoice />
           <ChoiceBttms />
-        </AppContext.Provider>
-       
-    </div>
+        </div>
+        
+        {confirm && <ShowResult/>}
+      </div>
+
+    </AppContext.Provider>
   );
 }
 
 const DisplayScore = () => {
+  const { score } = useContext(AppContext);
+
   return (
     <div className="flex-row">
-      <Score name = "User" score = {2}/>
-      <Score name = "Bot" score = {0}/>
+      <Score name = "User" score = {score.user}/>
+      <Score name = "Bot" score = {score.bot}/>
     </div>);
 }
 
 
-
 const Score = ({name, score}) => {
+
 
   return <div className='score'>
     <h2>{name}:</h2>
@@ -44,23 +57,20 @@ const Score = ({name, score}) => {
   </div>
 }
 
-function setBotChoice(){
-  return Math.floor(Math.random() * 3);
-}
-
-
 const DisplayChoice = () => {
-  const { options, choice, confirm} = useContext(AppContext);
+  const { options, choice, botChoice, setBotChoice, confirm} = useContext(AppContext);
+
+  setBotChoice(Math.floor(Math.random() * 3 )+ 1)
 
   return <div className="flex-row">
-    <Choice choice = {confirm && options[choice-1].icon}/>
-    <Choice choice = {confirm && options[setBotChoice()].icon}/>
+    <Choice choice = {confirm ? options[choice-1].icon : "❓" }/>
+    <Choice choice = {confirm ? options[botChoice-1].icon : "❓" }/>
   </div>
 }
 
 const Choice = ({choice}) => {
   return <div className="choice">
-    <div className='choice-icon'>{choice? choice : "❓" }</div>
+    <div className='choice-icon'>{choice}</div>
   </div>
 }
 
@@ -106,6 +116,46 @@ const ChoiceBttm = ({id, children}) => {
 }
 
 
+const ShowResult = () => {
+
+  const {choice, botChoice, setChoice, setBotChoice, setConfirm, setScore, score} = useContext(AppContext);
+  let result = null;
+  let newScore = null;
+
+  (function(){
+
+    if(choice == botChoice){
+      newScore = {user: score.user+1, bot: score.bot+1};
+      return result = "Empate!";
+    }
+  
+    if(choice == 1 &&  botChoice  == 3 || 
+      choice ==  3 &&  botChoice == 2 ||
+      choice ==  2 &&  botChoice == 1
+    ){
+      newScore = {user: score.user+1, bot: score.bot};
+      return result = "Victory!";
+    }
+    
+    newScore ={user: score.user, bot: score.bot+1};
+    return result = "Defeat!"
+
+  })();
+
+  const resetGame = () => {
+    setChoice(null);
+    setBotChoice(null);
+    setConfirm(false);
+    setScore(newScore);
+  } 
+
+  return <div className="dark-bkg">
+    <div className="result-card">
+        <h2 className="result-text">{result}</h2>
+        <button onClick ={() => resetGame()} className="confirm-bttm">continue</button>
+    </div>
+  </div>
+}
 
 
 
