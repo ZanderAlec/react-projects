@@ -1,0 +1,36 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container{
+  display: inline-block;
+}
+
+.star-icon{
+  width: 2rem;
+}
+
+.star-icon:hover{
+  cursor:pointer;
+}
+
+.star-list-container{
+  background-color: rgb(40, 40, 57);
+  border-radius: 5px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.star-list{
+  display: flex;
+  gap: 0.4rem;
+}
+
+.rating-number{
+  color: rgb(255, 208, 0);
+  font-size: 1.5rem;
+}

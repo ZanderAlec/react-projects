@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, createContext, useContext, useEffect, useRef   } from 'react';
+import { useState, createContext, useContext} from 'react';
 
 const options = [
   {id: 1, icon: "👊"},
@@ -63,14 +63,14 @@ const DisplayChoice = () => {
   setBotChoice(Math.floor(Math.random() * 3 )+ 1)
 
   return <div className="flex-row">
-    <Choice choice = {confirm ? options[choice-1].icon : "❓" }/>
-    <Choice choice = {confirm ? options[botChoice-1].icon : "❓" }/>
+    <Choice choice = {confirm && options[choice-1].icon }/>
+    <Choice choice = {confirm && options[botChoice-1].icon}/>
   </div>
 }
 
 const Choice = ({choice}) => {
   return <div className="choice">
-    <div className='choice-icon'>{choice}</div>
+    <div className='choice-icon'>{choice? choice : "❓"}</div>
   </div>
 }
 
