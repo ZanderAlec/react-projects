@@ -19,18 +19,18 @@ function App() {
 
   return (
     <div className="App">
-      <StepsBar stepsNum = {5} stepTitles = {titles} step = {step}/>
+      <StepsBar stepsNum = {4} stepTitles = {titles} currentStep = {step}/>
       <StepsBar stepsNum = {3} />
       
       <button onClick={() => previousStep()} className='continue-bttm'>Voltar</button>
       <button onClick={() => nextStep()} className='continue-bttm'>Continuar</button>
+    
     </div>
   );
 }
 
-const StepsBar = ({stepsNum = 3, stepTitles, step}) => {
+const StepsBar = ({stepsNum = 3, stepTitles, currentStep}) => {
   
-  const curStep = step;
 
   const steps = [];
 
@@ -39,7 +39,7 @@ const StepsBar = ({stepsNum = 3, stepTitles, step}) => {
     <Step   
       num = {i+1} 
       title = {stepTitles && stepTitles[i] ? stepTitles[i] : "Step "+(i+1)}
-      complete = { i+1 <= curStep ? true : false}
+      complete = { i+1 <= currentStep ? true : false}
     />
     );
   }
@@ -53,11 +53,16 @@ const Step = ({num, title, complete}) => {
 
 
   return (
-    <div class="step-container">
-        <div className='step'>
+    // <div class="step-container">
+    //     <div className='step'>
+    //       {complete? <img class="step-icon" src={confirmIcon} alt=""/> : <p class="step-number" >{num}</p>}
+    //     </div>
+    //     <p class="step-title">{title}</p>
+    // </div>
+    <div className='step'>
+        <div className='step-item'>
           {complete? <img class="step-icon" src={confirmIcon} alt=""/> : <p class="step-number" >{num}</p>}
         </div>
-        <p class="step-title">{title}</p>
     </div>
   );
 }
