@@ -53,12 +53,7 @@ const Step = ({num, title, complete}) => {
 
 
   return (
-    // <div class="step-container">
-    //     <div className='step'>
-    //       {complete? <img class="step-icon" src={confirmIcon} alt=""/> : <p class="step-number" >{num}</p>}
-    //     </div>
-    //     <p class="step-title">{title}</p>
-    // </div>
+  
     <div className='step'>
         <div className='step-item'>
           {complete? <img class="step-icon" src={confirmIcon} alt=""/> : <p class="step-number" >{num}</p>}
