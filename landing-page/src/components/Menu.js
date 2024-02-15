@@ -2,6 +2,9 @@ import burguerIcon from "../assets/burguer-menu.png";
 import closeBttm from "../assets/closeBttm.png";
 import { useState } from 'react';
 
+import { Link } from "react-router-dom";
+
+
 
 export const Menu = () => {
 
@@ -21,12 +24,10 @@ export const Menu = () => {
         <menu className={`lg:space-x-8  lg:decoration-solid lg:block underline 
                             ${menuOpen ? " absolute right-4 top-20 z-40 text-white flex flex-col text-right	gap-4" : "hidden"}`}
         >
-            <a className="hover:font-semibold" href="\algo">Pricing</a>
-            <a className="hover:font-semibold" href="#">Services</a>
-            <a className="hover:font-semibold" href="#">Use Cases</a>
+            <Link className="hover:font-semibold" to="/pricing">Pricing</Link> 
+            <Link className="hover:font-semibold" to="/services">Services</Link>
+            <Link className="hover:font-semibold" to="/useCases">Use Cases</Link>
         </menu>
-
-        
 
     </div>
 
