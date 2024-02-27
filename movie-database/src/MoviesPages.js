@@ -1,9 +1,10 @@
 import { Header } from "./Header"
 import { Movie } from "./Movie"
+import { MovieInfo } from "./movieInfo.js"
 
 export const MoviesPage = () => {
     return (
-        <div class=" h-full sm:h-fit md:px-6 md:pb-9 bg-sky-950">
+        <div class=" h-full sm:h-screen md:px-6 md:pb-9 bg-sky-950 relative">
             <Header/>
 
             <div className = "pt-8 h-5/6">
@@ -29,6 +30,8 @@ export const MoviesPage = () => {
                 </div>
                 
             </div>
+
+            <MovieInfo/>
            
         </div>
     )
