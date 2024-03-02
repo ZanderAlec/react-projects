@@ -1,15 +1,16 @@
-export const Movie = () => {
+export const Movie = ({onInfosToggle, clicked, title, year, img  }) => {
     return (
-    <div className="bg-sky-700 w-full md:w-40	mb-4 rounded-md flex md:flex-col  ">
+    <div className={` w-full md:w-40	mb-4 flex md:flex-col pb-2 brightness-75 hover:cursor-pointer	hover:brightness-100 ${clicked && "brightness-100"}`}
+        onClick={() => onInfosToggle(true)}
+    >
              <div className = "w-20	 md:w-full ">
-               <img className="w-full block " src="https://m.media-amazon.com/images/M/MV5BZWQ0OTQ3ODctMmE0MS00ODc2LTg0ZTEtZWIwNTUxOGExZTQ4XkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg" alt="Poster"/>
+               <img className="w-full block border-t-rounded-md	" src={img} alt="Poster"/>
             </div>
 
-            <div className="p-4 w-full">
-                <h2 className=" text-white text-2xl pb-2">Titulo</h2>
-                <div className="flex justify-between">
-                    <h3>Autor tal</h3>
-                    <p className="text-neutral-400">1994</p>
+            <div className="pt-1 w-full px-2">
+                <h2 className=" text-white text-2xl pb-1">{title}</h2>
+                <div className="flex justify-between text-neutral-300">
+                    <p >{year}</p>
                 </div>
             </div>
         </div>
