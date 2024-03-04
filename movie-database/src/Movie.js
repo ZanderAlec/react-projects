@@ -1,9 +1,9 @@
 export const Movie = ({onInfosToggle, clicked, title, year, img  }) => {
     return (
     <div className={` w-full md:w-40	mb-4 flex md:flex-col pb-2 brightness-75 hover:cursor-pointer	hover:brightness-100 ${clicked && "brightness-100"}`}
-        onClick={() => onInfosToggle(true)}
+        onClick={() => onInfosToggle()}
     >
-             <div className = "w-20	 md:w-full ">
+            <div className = "w-20	 md:w-full ">
                <img className="w-full block border-t-rounded-md	" src={img} alt="Poster"/>
             </div>
 
