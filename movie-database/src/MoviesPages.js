@@ -8,10 +8,10 @@ export const MoviesPage = () => {
 
     const key = "ed7c69f1";
 
-    const [infosToggle, setInfosToggle] = useState(undefined);
+    const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
     const [movieList, setMovieList] = useState([]);
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(function () {
@@ -32,8 +32,7 @@ export const MoviesPage = () => {
                     throw new Error("Movie not found");
 
                 setMovieList(data.Search);
-                console.log(data);
-
+                console.log(data)
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -47,69 +46,45 @@ export const MoviesPage = () => {
 
 
     return (
-        <div className=" bg-sky-950">
+        <div className={` bg-sky-950 `}>
 
-            <div class={` h-screen md:px-6 md:pb-9 relative 	${(infosToggle >= 0) && "w-[67%]			"}`}>
+            <div class={` md:px-6 md:pb-9 relative flex flex-col items-stretch	
+                ${selectedMovieId  && "sm:w-[51%] lg:w-[67%] "} 
+                ${(!query || error) ? "h-screen" : "h-fit"}`}>
                 <Header>
                     <Search query={query} setQuery={setQuery} />
                 </Header>
 
-                <div className="pt-8 h-5/6 ">
-                    <div className="flex flex-col lg:flex-row justify-between items-center	pb-8	">
-                        <h2 className="text-white text-3xl	md:text-5xl text-center lg:text-left break-words pb-2  px-2 ">
-                            {query ? `Results of ${query}` : "My Watchlist"}
-                        </h2>
-                        <div className="flex justify-between text-1xl md:text-2xl	 text-white	">
-                            {query ? <h3 >Found {movieList.length} results</h3>
-                                : <div className="flex ">
-                                    <h3 className="pr-2">🎬0</h3>
-                                    <h3 className="pr-2">⭐0</h3>
-                                    <h3>⏳0 min</h3>
-                                </div>}
+                <div className="grow-0  flex flex-col lg:flex-row justify-between items-center	 py-10	">
+                    <h2 className="text-white text-2xl	md:text-4xl text-center lg:text-left break-words  px-2 ">
+                        {query ? `Results of ${query}` : "My Watchlist"}
+                    </h2>
+                    <div className="flex justify-between text-1xl md:text-2xl	font-light text-white	">
+                        {query ? <h3 >Found {movieList.length} results</h3>
+                            : <div className="flex ">
+                                <h3 className="pr-2">🎬0</h3>
+                                <h3 className="pr-2">⭐0</h3>
+                                <h3>⏳0 min</h3>
+                            </div>}
 
-                        </div>
                     </div>
+                </div>
 
-                    <div className="bg-sky-900 py-8 w-full min-h-[70%] lg:min-h-[90%]			">
-                        <div className="mt-2 px-2 md:px-8 flex justify-center	lg:justify-normal gap-2 sm:gap-6 h-full flex-wrap	">
+                <div className="bg-sky-900 py-8  grow pl-2 sm:pl-0">
+                    <div className="  mx-auto flex sm:justify-center   gap-2 xl:gap-6  h-full  flex-wrap">
 
-                            {isLoading && "Loading"}
-                            {!isLoading && !error && movieList.map((value, id) => {
-                                return <Movie onInfosToggle={() => { setInfosToggle(id); console.log(id) }} title={value.Title} year={value.Year} img={value.Poster} />
-                            })}
-                            {error && error}
-                        </div>
+                        {isLoading && "Loading"}
+                        {!isLoading && !error && movieList.map((value, id) => {
+                            return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
+                        })}
+                        {error && error}
                     </div>
-
                 </div>
 
             </div>
 
-            {(infosToggle >= 0) && <MovieInfo toggleClick={() => setInfosToggle(undefined)}>
 
-                <div className="  w-full  h-2/5 xl:h-2/6 mb-4 ">
-                    <img className=" mx-auto" src={movieList[infosToggle].Poster} alt="Poster" />
-                </div>
-
-                <div className="px-6">
-                    <h2 className=" text-white text-3xl pb-2 font-bold	 mb-2">{movieList[infosToggle].Title}</h2>
-                    <div className="text-neutral-300 text-1xl">
-                        <div className="flex gap-4 mb-2">
-                            <p>{movieList[infosToggle].Year}</p>
-                            <p> {movieList[infosToggle].Type}</p>
-                        </div>
-
-                        <p className="mb-2">Animação, sci-fi, short </p>
-                        <p className="mb-6">⭐ 7.8 IMDB RATING</p>
-
-                        <p className="italic text-justify	">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                    </div>
-                </div>
-
-            </MovieInfo>}
-
+            {selectedMovieId && <MovieInfo toggleClick={() => setSelectedMovieId(null)} apikey = {key} selectedId={selectedMovieId}/>}
         </div>
-
-
     )
 }
