@@ -1,5 +1,6 @@
 import { Header } from "./Header"
 import { Movie } from "./Movie"
+import { Watchlist } from "./Watchlist.js";
 import { Search } from "./assets/search.js";
 import { MovieInfo } from "./movieInfo.js"
 import { useState, useEffect } from "react";
@@ -11,13 +12,25 @@ export const MoviesPage = () => {
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
     const [movieList, setMovieList] = useState([]);
+    const [likedMovieList, setLikedMovieList] = useState(["tt0372784", "tt1877830", "tt2975590"]); 
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
+
+    function handleLikedMovie(id){
+        let temp = [id, ...likedMovieList];
+        setLikedMovieList(temp)
+    }
+
+    function removeLikedMovie(id){
+        setLikedMovieList(likedMovieList.filter((value) => value != id));
+    }
+
     useEffect(function () {
 
-        async function fetchMovies() {
+        async function fetchMoviesQuery() {
             try {
+                setMovieList([]);
                 setIsLoading(true);
                 setError("");
 
@@ -32,7 +45,8 @@ export const MoviesPage = () => {
                     throw new Error("Movie not found");
 
                 setMovieList(data.Search);
-                console.log(data)
+                console.log(data.Search)
+
             } catch (err) {
                 setError(err.message);
             } finally {
@@ -40,14 +54,37 @@ export const MoviesPage = () => {
             }
         }
 
-        fetchMovies();
+        async function fetchMoviesLiked(){
 
-    }, [query]);
+            setMovieList([]);
+            let tempList = [];
+
+            for(let id of likedMovieList){
+                console.log(id)
+                const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${id}`);
+           
+                const data = await res.json();
+                console.log(data);
+
+
+                tempList.push(data)
+            }
+
+            setMovieList(tempList);
+            console.log(movieList)
+        }
+
+
+        if(query)
+            fetchMoviesQuery();
+        else 
+            fetchMoviesLiked()
+        
+    }, [query, likedMovieList]);
 
 
     return (
         <div className={` bg-sky-950 `}>
-
             <div class={` md:px-6 md:pb-9 relative flex flex-col items-stretch	
                 ${selectedMovieId  && "sm:w-[51%] lg:w-[67%] "} 
                 ${(!query || error) ? "h-screen" : "h-fit"}`}>
@@ -72,19 +109,35 @@ export const MoviesPage = () => {
 
                 <div className="bg-sky-900 py-8  grow pl-2 sm:pl-0">
                     <div className="  mx-auto flex sm:justify-center   gap-2 xl:gap-6  h-full  flex-wrap">
-
+                        
                         {isLoading && "Loading"}
-                        {!isLoading && !error && movieList.map((value, id) => {
+
+                        {query && error && error}
+
+                        {query && !isLoading && !error && movieList.map((value) => {
                             return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
                         })}
-                        {error && error}
+
+
+                        {!query && <Watchlist>
+                            {movieList.map((value) => {
+                                return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
+                            })}  
+                        </Watchlist> }
+
                     </div>
                 </div>
 
             </div>
 
 
-            {selectedMovieId && <MovieInfo toggleClick={() => setSelectedMovieId(null)} apikey = {key} selectedId={selectedMovieId}/>}
+            {selectedMovieId && 
+                <MovieInfo toggleClick={() => setSelectedMovieId(null)} 
+                setLikedMovie = {handleLikedMovie} 
+                removeLikedMovie = {removeLikedMovie}
+                apikey = {key} 
+                selectedId={selectedMovieId}/>
+            }
         </div>
     )
 }
