@@ -2,9 +2,9 @@ import heartIcon from "./assets/heart-icon.png";
 import fillHeartIcon from "./assets/heart-icon-filled.png"
 import { useEffect, useState } from "react";
 
-export const MovieInfo = ({ apikey, selectedId, toggleClick, setLikedMovie, removeLikedMovie}) => {
+export const MovieInfo = ({ apikey, isliked, selectedId, toggleClick, setLikedMovie, removeLikedMovie}) => {
 
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(isliked);
     const [movieDetails, setMovieDetails] = useState({});
 
     function handleLikeClick(){
@@ -18,7 +18,7 @@ export const MovieInfo = ({ apikey, selectedId, toggleClick, setLikedMovie, remo
 
             const data = await res.json();
 
-            console.log(data);
+            setLiked(isliked);
             setMovieDetails(data);
         }
 

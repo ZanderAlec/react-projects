@@ -15,6 +15,7 @@ export const MoviesPage = () => {
     const [likedMovieList, setLikedMovieList] = useState(["tt0372784", "tt1877830", "tt2975590"]); 
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [watchedTime, setWatchedTime] = useState(0); 
 
 
     function handleLikedMovie(id){
@@ -24,6 +25,11 @@ export const MoviesPage = () => {
 
     function removeLikedMovie(id){
         setLikedMovieList(likedMovieList.filter((value) => value != id));
+    }
+
+    function searchWatchList(id){
+        const likedMovie =  likedMovieList.filter(value => value == id);
+        return likedMovie.length !== 0;
     }
 
     useEffect(function () {
@@ -58,20 +64,19 @@ export const MoviesPage = () => {
 
             setMovieList([]);
             let tempList = [];
+            let time = 0;
 
             for(let id of likedMovieList){
-                console.log(id)
                 const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${id}`);
            
                 const data = await res.json();
-                console.log(data);
 
-
+                time += parseInt(data.Runtime.slice(0,3));
                 tempList.push(data)
             }
 
             setMovieList(tempList);
-            console.log(movieList)
+            setWatchedTime(time);
         }
 
 
@@ -88,25 +93,28 @@ export const MoviesPage = () => {
             <div class={` md:px-6 md:pb-9 relative flex flex-col items-stretch	
                 ${selectedMovieId  && "sm:w-[51%] lg:w-[67%] "} 
                 ${(!query || error) ? "h-screen" : "h-fit"}`}>
+
                 <Header>
                     <Search query={query} setQuery={setQuery} />
                 </Header>
 
+                {/*Titulo e infos*/}
                 <div className="grow-0  flex flex-col lg:flex-row justify-between items-center	 py-10	">
                     <h2 className="text-white text-2xl	md:text-4xl text-center lg:text-left break-words  px-2 ">
                         {query ? `Results of ${query}` : "My Watchlist"}
                     </h2>
+
                     <div className="flex justify-between text-1xl md:text-2xl	font-light text-white	">
                         {query ? <h3 >Found {movieList.length} results</h3>
                             : <div className="flex ">
-                                <h3 className="pr-2">🎬0</h3>
-                                <h3 className="pr-2">⭐0</h3>
-                                <h3>⏳0 min</h3>
+                                <h3 className="pr-2">🎬 {movieList.length} </h3>
+                                <h3>⏳{watchedTime} min</h3>
                             </div>}
 
                     </div>
                 </div>
 
+                {/*lista de filmes*/}
                 <div className="bg-sky-900 py-8  grow pl-2 sm:pl-0">
                     <div className="  mx-auto flex sm:justify-center   gap-2 xl:gap-6  h-full  flex-wrap">
                         
@@ -130,13 +138,16 @@ export const MoviesPage = () => {
 
             </div>
 
-
+            {/*Filme selecionado*/}
             {selectedMovieId && 
                 <MovieInfo toggleClick={() => setSelectedMovieId(null)} 
                 setLikedMovie = {handleLikedMovie} 
                 removeLikedMovie = {removeLikedMovie}
                 apikey = {key} 
-                selectedId={selectedMovieId}/>
+                selectedId={selectedMovieId}
+                isliked = {searchWatchList(selectedMovieId)}
+                />
+               
             }
         </div>
     )

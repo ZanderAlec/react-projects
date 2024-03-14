@@ -9,7 +9,7 @@ export const Watchlist = ({children}) => {
             {/* :  */}
             {children
         }
-        
+            
     </>
 
 }
