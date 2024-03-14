@@ -5,18 +5,18 @@ import { Search } from "./assets/search.js";
 import { MovieInfo } from "./movieInfo.js"
 import { useState, useEffect } from "react";
 
+import { useFetch } from "./hooks/useFetch.js";
+
 export const MoviesPage = () => {
 
     const key = "ed7c69f1";
 
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
-    const [movieList, setMovieList] = useState([]);
     const [likedMovieList, setLikedMovieList] = useState(["tt0372784", "tt1877830", "tt2975590"]); 
-    const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
     const [watchedTime, setWatchedTime] = useState(0); 
-
+    const [queryList, fetchByQuery, fetchById, error, isLoading] = useFetch();
+    const [watchList, setWatchList] = useState([]);
 
     function handleLikedMovie(id){
         let temp = [id, ...likedMovieList];
@@ -35,47 +35,25 @@ export const MoviesPage = () => {
     useEffect(function () {
 
         async function fetchMoviesQuery() {
-            try {
-                setMovieList([]);
-                setIsLoading(true);
-                setError("");
-
-                const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&s=${query}`);
-
-                if (!res.ok)
-                    throw new Error("Something went wrong!");
-
-                const data = await res.json();
-
-                if (data.Response === "False")
-                    throw new Error("Movie not found");
-
-                setMovieList(data.Search);
-                console.log(data.Search)
-
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
+            await fetchByQuery(query);
         }
 
         async function fetchMoviesLiked(){
 
-            setMovieList([]);
             let tempList = [];
             let time = 0;
 
             for(let id of likedMovieList){
-                const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${id}`);
+                // const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${id}`);
            
-                const data = await res.json();
+                // const data = await res.json();
 
-                time += parseInt(data.Runtime.slice(0,3));
-                tempList.push(data)
+                const result = await fetchById(id);
+                time += parseInt(result.Runtime.slice(0,3));
+                tempList.push(result);
             }
 
-            setMovieList(tempList);
+            setWatchList(tempList);
             setWatchedTime(time);
         }
 
@@ -105,9 +83,9 @@ export const MoviesPage = () => {
                     </h2>
 
                     <div className="flex justify-between text-1xl md:text-2xl	font-light text-white	">
-                        {query ? <h3 >Found {movieList.length} results</h3>
+                        {queryList ? <h3 >Found {queryList.length} results</h3>
                             : <div className="flex ">
-                                <h3 className="pr-2">🎬 {movieList.length} </h3>
+                                <h3 className="pr-2">🎬 {watchList.length} </h3>
                                 <h3>⏳{watchedTime} min</h3>
                             </div>}
 
@@ -122,13 +100,13 @@ export const MoviesPage = () => {
 
                         {query && error && error}
 
-                        {query && !isLoading && !error && movieList.map((value) => {
+                        {query && !isLoading && !error && queryList.map((value) => {
                             return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
                         })}
 
 
                         {!query && <Watchlist>
-                            {movieList.map((value) => {
+                            {watchList.map((value) => {
                                 return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
                             })}  
                         </Watchlist> }

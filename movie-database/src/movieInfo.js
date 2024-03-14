@@ -1,11 +1,13 @@
 import heartIcon from "./assets/heart-icon.png";
 import fillHeartIcon from "./assets/heart-icon-filled.png"
 import { useEffect, useState } from "react";
+import { useFetch } from "./hooks/useFetch";
 
-export const MovieInfo = ({ apikey, isliked, selectedId, toggleClick, setLikedMovie, removeLikedMovie}) => {
+export const MovieInfo = ({ isliked, selectedId, toggleClick, setLikedMovie, removeLikedMovie}) => {
 
     const [liked, setLiked] = useState(isliked);
     const [movieDetails, setMovieDetails] = useState({});
+    const [, , fetchById, , isLoading] = useFetch();
 
     function handleLikeClick(){
         liked ? removeLikedMovie(selectedId) : setLikedMovie(selectedId);
@@ -14,12 +16,10 @@ export const MovieInfo = ({ apikey, isliked, selectedId, toggleClick, setLikedMo
 
     useEffect(function () {
         async function getMovieDetails() {
-            const res = await fetch(`https://www.omdbapi.com/?apikey=${apikey}&i=${selectedId}`);
-
-            const data = await res.json();
+            const res = await fetchById(selectedId);
 
             setLiked(isliked);
-            setMovieDetails(data);
+            setMovieDetails(res);
         }
 
         getMovieDetails();
