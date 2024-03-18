@@ -1,0 +1,17 @@
+:root{
+  --green: #96CEB4;
+  --yellow: #FFEEAD;
+  --blue: #B4E4FF;
+  --pink: #F28585;
+  --grey: #F8F4EC;
+  --white: #f7f7f7;
+  --status-green: #4CCD99;
+  --status-orange:#FFAD60;
+  --status-red: #D9534F;
+}
+
+
+*{
+  margin: 0;
+  box-sizing: border-box;
+}

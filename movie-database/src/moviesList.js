@@ -1,6 +1,6 @@
 import { Movie } from "./Movie";
 
-export const WatchList = ({watched, setSelectedMovieId}) => {
+export const MovieList = ({watched, setSelectedMovieId}) => {
     return <div>
 
         {watched.length > 0 ? 

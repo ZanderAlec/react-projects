@@ -1,11 +1,11 @@
 import { Header } from "./Header"
 import { Movie } from "./Movie"
-import { Watchlist } from "./Watchlist.js";
 import { Search } from "./assets/search.js";
 import { MovieInfo } from "./movieInfo.js"
 import { useState, useEffect } from "react";
 
 import { useFetch } from "./hooks/useFetch.js";
+import { WatchList } from "./Watchlist.js";
 
 export const MoviesPage = () => {
 
@@ -13,14 +13,17 @@ export const MoviesPage = () => {
 
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
-    const [likedMovieList, setLikedMovieList] = useState(["tt0372784", "tt1877830", "tt2975590"]); 
+    const [likedMovieList, setLikedMovieList] = useState([]); 
     const [watchedTime, setWatchedTime] = useState(0); 
     const [queryList, fetchByQuery, fetchById, error, isLoading] = useFetch();
     const [watchList, setWatchList] = useState([]);
 
     function handleLikedMovie(id){
-        let temp = [id, ...likedMovieList];
-        setLikedMovieList(temp)
+        setLikedMovieList([id, ...likedMovieList])
+    }
+
+    function handleSelectedMovie(id){
+        setSelectedMovieId(id);
     }
 
     function removeLikedMovie(id){
@@ -44,9 +47,6 @@ export const MoviesPage = () => {
             let time = 0;
 
             for(let id of likedMovieList){
-                // const res = await fetch(`https://www.omdbapi.com/?apikey=${key}&i=${id}`);
-           
-                // const data = await res.json();
 
                 const result = await fetchById(id);
                 time += parseInt(result.Runtime.slice(0,3));
@@ -79,7 +79,7 @@ export const MoviesPage = () => {
                 {/*Titulo e infos*/}
                 <div className="grow-0  flex flex-col lg:flex-row justify-between items-center	 py-10	">
                     <h2 className="text-white text-2xl	md:text-4xl text-center lg:text-left break-words  px-2 ">
-                        {query ? `Results of ${query}` : "My Watchlist"}
+                        {queryList ? `Results of ${query}` : "My Watchlist"}
                     </h2>
 
                     <div className="flex justify-between text-1xl md:text-2xl	font-light text-white	">
@@ -101,15 +101,13 @@ export const MoviesPage = () => {
                         {query && error && error}
 
                         {query && !isLoading && !error && queryList.map((value) => {
-                            return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
+                            return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); }} movie={value}/>
                         })}
 
 
-                        {!query && <Watchlist>
-                            {watchList.map((value) => {
-                                return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); console.log(selectedMovieId) }} title={value.Title} year={value.Year} img={value.Poster} />
-                            })}  
-                        </Watchlist> }
+                        {!query && <WatchList watched = {watchList} setSelectedMovieId={handleSelectedMovie}/>
+                        } 
+                         
 
                     </div>
                 </div>
@@ -121,11 +119,9 @@ export const MoviesPage = () => {
                 <MovieInfo toggleClick={() => setSelectedMovieId(null)} 
                 setLikedMovie = {handleLikedMovie} 
                 removeLikedMovie = {removeLikedMovie}
-                apikey = {key} 
                 selectedId={selectedMovieId}
                 isliked = {searchWatchList(selectedMovieId)}
                 />
-               
             }
         </div>
     )
