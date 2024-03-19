@@ -45,10 +45,11 @@
 }
 
 .column{
-  max-height: 75vh;
+  height: auto;
+  max-height: 70vh;
   width: 20rem;
   flex-shrink:0;
-  padding: 2%;
+  padding: 2% 1%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -62,6 +63,16 @@
   justify-content: space-between;
 }
 
+.col-title{
+  text-wrap: wrap;
+  word-break: break-all;
+}
+
+.col-head-bttms{
+  align-self: flex-start;
+
+}
+
 .task-num{
   border-radius: 50%;
   width:2rem;
@@ -72,7 +83,8 @@
   margin-right: 0.5rem;
   font-weight: bolder;
   background-color: var(--white);
-
+  flex-shrink: 0;
+  align-self: flex-start;
 }
 
 
@@ -101,21 +113,27 @@
 }
 
 .card-title{
-  padding-bottom: 1rem;
+  display: inline-block;
+
+  padding-bottom: 0.5rem;
 }
 
 
 .time-done{
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .tag{
-  margin-left:1rem;
-  text-align: right;
-  padding: 0 0.5rem;
+ display: inline-block;
+  width: auto;
+  height: auto;
+  padding: 0 1rem;
   font-size: 1rem;
   border-radius: 5px;
+  margin-bottom: 0.5rem;
+
 }
 
 .tag--high{
@@ -138,3 +156,39 @@
 .icon--confirm{
   background-color: var(--status-green);
 }
+
+
+/*dinamic title*/
+.title-box{
+  position: relative;
+}
+
+.title-input{
+  position: relative;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  width: 100%;
+  resize: none;
+  
+
+}
+
+.title-input:focus{
+  outline: solid;
+  border-radius: 10px;
+}
+
+
+.input-handler{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+
+
+
