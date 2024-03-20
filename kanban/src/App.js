@@ -5,30 +5,20 @@ import { Title } from "./Title"
 
 import {useState} from 'react'
 
-
-const initialProject = {
-  title: "My project",
-  columns : [
-    {
-      title: "To Do",
-      tasks: [] 
-    }
-  ]
-}
+import { Project } from './constants/project';
 
 function App() {
 
-  const [project, setProject] = useState(initialProject);
+  const [project, setProject] = useState(new Project("My project"));
+  // const project = new Project("My project");
+
+  project.addColumn("Col 1");
 
   function changeProjectTitle(newTitle){
-    const newProj = { ...project, title: newTitle};
-    setProject(newProj);
+    project.title = newTitle;
+    setProject(project);
   }
 
-  function changeColumnTitle(id, newTitle){
-    const temp = {...project}
-    temp.columns[id].title = newTitle;
-  }
 
   return (
     <div className="container">
@@ -38,7 +28,7 @@ function App() {
             {project.title}
           </Title>
         </Header>
-        <ColumList colList = {project.columns}/>
+        <ColumList project = {project}/>
     </div>
   );
 }

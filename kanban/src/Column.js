@@ -2,16 +2,14 @@ import { Task } from "./Task"
 import { Title } from "./Title"
 import dots_icon from "./assets/dots-icon.png"
 
-export const Column = ({column}) => {
-    {console.log(column)}
-
+export const Column = ({column, rename}) => {
 
 
     return <div className = "column card-box">
         <div className = "column-header">
             <div className="column-header">
-                <div className="task-num icon-box--rounded">1</div>
-                <Title className={"col-title"}>
+                <div className="task-num icon-box--rounded">{column.tasks.length}</div>
+                <Title className={"col-title"} onRename={rename}>
                     {column.title}
                 </Title>
             </div>
@@ -28,7 +26,7 @@ export const Column = ({column}) => {
         <>
         {
             column.tasks.map((task) => {
-                return <Task/>
+                return <Task task = {task}/>
             })
         }
         </>

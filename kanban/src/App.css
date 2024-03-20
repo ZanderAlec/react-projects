@@ -40,7 +40,7 @@
   gap: 2rem;
   white-space: nowrap;
   overflow-x: auto;
-  align-items: center;
+  /* align-items: center; */
   display: flex;
 }
 
@@ -55,6 +55,17 @@
   gap: 1rem;
   overflow-y: auto;
   background-color: var(--pink);
+}
+
+.column--new{
+  border: 3px dashed black; 
+  height: 5rem;
+  background-color: var(--grey);
+}
+
+.column--new:hover{
+  cursor: pointer;
+  background-color: var(--blue);
 }
 
 .column-header{
@@ -113,7 +124,7 @@
 }
 
 .card-title{
-  display: inline-block;
+  /* display: inline-block; */
 
   padding-bottom: 0.5rem;
 }

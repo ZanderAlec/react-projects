@@ -6,15 +6,14 @@ export const Task = ({task}) => {
 
 
         <h2 className="card-title">
-            Isso definitivamente é um titulo
-           
+            {task.title}
         </h2>   
 
-        <div className="tag icon-box tag--low">Low</div>
+        <div className="tag icon-box tag--low">{task.priority}</div>
 
         <div className="time-done">
-            <p className="card-time " >Tomorrow 20:20</p>
-            <button  className="icon-box--rounded icon--confirm">
+            <p className="card-time " >{task.time}</p>
+            <button  className={`icon-box--rounded ${task.completed && "icon--confirm"}`}>
                 <img className="icon " src={check_icon} alt="v"/>
             </button>
         </div>
