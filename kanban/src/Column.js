@@ -1,8 +1,23 @@
+import { NewTask } from "./NewTask";
 import { Task } from "./Task"
 import { Title } from "./Title"
 import dots_icon from "./assets/dots-icon.png"
 
+
+import {useCallback, useState} from "react";
+
+
 export const Column = ({column, rename}) => {
+
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}), []);
+
+    const [toggle, setToggle] = useState(false);
+
+    function createTask(title, priority, data, time){
+        column.addTask(title, priority, data, time, false);
+        forceUpdate();
+    }
 
 
     return <div className = "column card-box">
@@ -31,6 +46,9 @@ export const Column = ({column, rename}) => {
         }
         </>
 
-        <button className="addTask-bttm ">+ Add new task</button>
+        <button onClick = {() => setToggle(true)} className="addTask-bttm ">+ Add new task</button>
+
+        {toggle && <NewTask  onClose = {() => setToggle(false)} createTask = {createTask}/> }  
+    
     </div>
 }

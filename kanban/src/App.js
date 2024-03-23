@@ -12,8 +12,6 @@ function App() {
   const [project, setProject] = useState(new Project("My project"));
   // const project = new Project("My project");
 
-  project.addColumn("Col 1");
-
   function changeProjectTitle(newTitle){
     project.title = newTitle;
     setProject(project);
@@ -28,6 +26,7 @@ function App() {
             {project.title}
           </Title>
         </Header>
+        
         <ColumList project = {project}/>
     </div>
   );

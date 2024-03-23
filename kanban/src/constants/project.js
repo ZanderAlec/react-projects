@@ -68,10 +68,10 @@ export class Column {
 
 
 export class Task {
-    constructor(title, priority, time, completed) {
+    constructor(title, priority, deadline, completed) {        
         this.title = title;
         this.priority = priority;
-        this.time = time;
+        this.deadline = deadline;
         this.completed = completed;
 
         Object.defineProperties(this, {
@@ -81,7 +81,7 @@ export class Task {
 
                 get: () => { return priority; },
                 set: (value) => {
-                    if (typeof value !== "string" || value !== "low" || value != "medium" || value != "high")
+                    if (typeof value !== "string")
                         throw Error("Invalid value");
 
                     priority = value;

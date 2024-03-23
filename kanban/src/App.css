@@ -198,6 +198,75 @@
   height: 100%;
 }
 
+/*New task---------*/
+.fosco-bkg{
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgb(0,0,0, 0.5);
+  z-index: 2;
+}
+
+.newTask-window{
+  background-color: var(--yellow);
+  width: 30%;
+  height: auto;
+  margin: auto;
+  transform: translateY(30%);
+}
+
+.newTask-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--green);
+  border-radius: 7px 7px 0 0px;
+  border-bottom: 2px solid black;
+
+}
+
+.newTask-form{
+  padding: 0 2rem;
+}
+
+.newTask-input{
+  /* outline: 1px solid red; */
+  padding-top: 2rem;
+}
+
+.newTask-input label{
+  display: block;
+}
+
+.newTask-input input, select{
+  width: 100% !important;
+  height: 2rem;
+}
+
+
+.close-bttm{
+  border:0;
+  background: none;
+  font-size: 1.5rem;
+}
+
+.close-bttm:hover{
+  cursor: pointer;
+}
+
+.newtask-bttm{
+  display: block;
+  width: 50%;
+  margin: 2rem auto;
+}
+
+.newtask-bttm:hover{
+  cursor: pointer;
+  background-color: var(--green);
+}
 
 
 
