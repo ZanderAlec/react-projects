@@ -1,10 +1,18 @@
 import { useState } from "react";
 
-export const NewTask = ({onClose, createTask}) => {
+export const NewTask = ({
+    onClose,
+    createTask, 
+    task = {
+        title: "",
+        priority: "",
+        date: ""
+    }
+}) => {
 
 
-    const [title, setTitle] = useState("");
-    const [priority, setPriority] = useState("");
+    const [title, setTitle] = useState(task.title);
+    const [priority, setPriority] = useState(task.priority);
     const [deadline, setDeadline] = useState("")
 
     function handleSubmit() {
@@ -21,7 +29,7 @@ export const NewTask = ({onClose, createTask}) => {
         <div className="newTask-window card-box">
             <div className="newTask-header">
                 <h2>new Task</h2>
-                <button onClick={() => onClose()} className = "close-bttm" type="">x</button>
+                <button onClick={() => onClose()} className = "bttm" type="">x</button>
             </div>
       
             <form className="newTask-form" >
@@ -42,9 +50,9 @@ export const NewTask = ({onClose, createTask}) => {
                     <select className=" icon-box " 
                         onChange={(event) => setPriority(event.target.value)}>
                             <option selected></option>
-                            <option  value="low">low</option>
-                            <option value="medium">medium</option>
-                            <option value="high">high</option>
+                            <option selected = {task.priority === "low"} value="low">low</option>
+                            <option selected = {task.priority === "medium"} value="medium">medium</option>
+                            <option selected = {task.priority === "high"} value="high">high</option>
                     </select>
                 </div>
 

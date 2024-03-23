@@ -30,8 +30,7 @@ export const Column = ({column, rename}) => {
             </div>
            
            <div class="col-head-bttms">
-            <button className="icon-box--rounded">+</button>
-            <button className="icon-box">
+            <button className="bttm">
                 <img className = "icon " src={dots_icon} alt="..." />
             </button>
            </div>

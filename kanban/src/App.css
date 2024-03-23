@@ -30,6 +30,7 @@
   border-radius: 20px;
   width: 2rem;
   height: 2rem;
+  line-height: 2rem;
   border: solid black;
   border-width: 1px 3px 3px 1px;
 }
@@ -124,17 +125,13 @@
 }
 
 .card-title{
-  /* display: inline-block; */
-
-  padding-bottom: 0.5rem;
-}
-
-
-.time-done{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* padding-bottom: 0.5rem; */
 }
+
+
 
 .tag{
  display: inline-block;
@@ -162,6 +159,7 @@
 
 .icon{
   width: 1rem;
+  height: 1rem;
 }
 
 .icon--confirm{
@@ -170,9 +168,6 @@
 
 
 /*dinamic title*/
-.title-box{
-  position: relative;
-}
 
 .title-input{
   position: relative;
@@ -247,13 +242,13 @@
 }
 
 
-.close-bttm{
+.bttm{
   border:0;
   background: none;
   font-size: 1.5rem;
 }
 
-.close-bttm:hover{
+.bttm:hover{
   cursor: pointer;
 }
 
