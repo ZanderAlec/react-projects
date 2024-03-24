@@ -1,72 +1,79 @@
 import { useEffect, useState } from "react"
 import check_icon from "./assets/check-icon.webp"
 import edit_icon from "./assets/edit-icon.png"
+import delete_icon from "./assets/delete-icon.png"
+
 import { NewTask } from "./NewTask"
 
-export const Task = ({task}) => {
+
+export const Task = ({ task, onDelete, onEdit }) => {
     const [toggle, setToggle] = useState(false);
     const [deadlineMsg, setDeadlineMsg] = useState("");
-    const [localTask, setLocalTask] = useState(task);
 
-    const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [  localTask.deadline.getDate(),  localTask.deadline.getMonth(),   task.deadline.getFullYear(),   localTask.deadline.getHours(),   localTask.deadline.getMinutes()];
+    const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [task.deadline.getDate(), task.deadline.getMonth(), task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
 
-    function handleComplete(){
-        setLocalTask({...localTask, completed: !localTask.completed});
+    function handleComplete() {
+        const newStatus = !task.completed;
+        onEdit({ ...task, completed: newStatus })
     }
 
-    function editTask(title, priority, deadline){
-        const newTask = {title, priority, deadline, completed: false}
-        setLocalTask(newTask);
+    function editTask(editedTask) {
+        onEdit(editedTask);
     }
 
     useEffect(() => {
         const date = new Date();
-        const [day, month, year, hours, minutes] = [date.getDate(),date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
-        const joinDate = (day+month+year+hours+minutes);
-        const joinDeadDate = (deadDay+deadMonth+deadYear+deadHour+deadMinute)
+        const [day, month, year, hours, minutes] = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
+        const joinDate = (day + month + year + hours + minutes);
+        const joinDeadDate = (deadDay + deadMonth + deadYear + deadHour + deadMinute)
 
-        if(joinDate > joinDeadDate)
+        if (joinDate > joinDeadDate)
             setDeadlineMsg("Expired");
 
-        else if(joinDeadDate === joinDate+1)
+        else if (joinDeadDate === joinDate + 1)
             setDeadlineMsg("Tomorrow");
-        
-        else if(joinDate === joinDeadDate)
+
+        else if (joinDate === joinDeadDate)
             setDeadlineMsg("Today");
-        
+
         else
             setDeadlineMsg("");
-            
-    },[deadlineMsg, localTask.deadline]);
+
+    }, [deadlineMsg, task.deadline]);
 
 
 
-    return <div className = "card card-box">
+    return <div className="card card-box">
         <div className="card-title">
-           
-            <div className={`tag icon-box tag--${localTask.priority}`}>{localTask.priority}</div>
-            <button onClick={() => setToggle(true)} className="bttm"><img className="icon" src={edit_icon} alt="edit"/></button>
-        </div>   
 
-        <h2>
-            {localTask.title}
-        </h2>
+            <div className={`tag icon-box tag--${task.priority}`}>
+                {task.priority}
+            </div>
 
-        {toggle && <NewTask onClose = {() => setToggle(false)}  createTask={editTask} task = {task}/>}
+            <div class="card-title--icons">
+                <button onClick={() => setToggle(true)} className="bttm"><img className="icon" src={edit_icon} alt="edit" /></button>
+                <button onClick = {() => onDelete()} className="bttm"><img className="icon" src={delete_icon} alt="delete" /></button>
+            </div>
+
+        </div>
+
+        <h2> {task.title} </h2>
+
+        {toggle && <NewTask onClose={() => setToggle(false)} createTask={editTask} task={task} />}
 
 
         <div className="card-title">
 
             <p>
-                {deadlineMsg ? deadlineMsg : `${deadYear}-${deadMonth}-${deadDay}`} 
+                {deadlineMsg ? deadlineMsg : `${deadYear}-${deadMonth}-${deadDay}`}
                 {` ${deadHour}:${deadMinute}`}
             </p>
 
-            <button  className={` icon-box--rounded  ${localTask.completed && "icon--confirm"}`}
-                    onClick={() => handleComplete()}>
-                <img className="icon " src={check_icon} alt="v"/>
+            <button className={` icon-box--rounded  ${task.completed && "icon--confirm"}`}
+                onClick={() => handleComplete()}>
+                <img className="icon " src={check_icon} alt="v" />
             </button>
         </div>
-       
+
     </div>
 }

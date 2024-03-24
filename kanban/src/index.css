@@ -1,9 +1,10 @@
 :root{
-  --green: #96CEB4;
-  --yellow: #FFEEAD;
-  --blue: #B4E4FF;
-  --pink: #F28585;
-  --grey: #F8F4EC;
+  --green: #00995E;
+  --yellow: #FFC567;
+  --blue: #058CD7;
+  --pink: #FD5A46;
+  --grey: #f5f2ec;
+  --dark-grey: #ede7dd;
   --white: #f7f7f7;
   --status-green: #4CCD99;
   --status-orange:#FFAD60;
@@ -13,5 +14,6 @@
 
 *{
   margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }

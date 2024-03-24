@@ -7,7 +7,6 @@ export const Title = ({ className, onRename, maxLength = 50, children }) => {
 
 
     function handleChange(event) {
-        console.log(event.target.style);
         // Set the dinamic size of textArea:
         event.target.style.height = 'auto';
         event.target.style.height = event.target.scrollHeight + 'px';

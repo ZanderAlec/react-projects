@@ -2,21 +2,19 @@ import './App.css';
 import { ColumList } from './ColumnList';
 import { Header } from './Header';
 import { Title } from "./Title"
-
 import {useState} from 'react'
-
-import { Project } from './constants/project';
 
 function App() {
 
-  const [project, setProject] = useState(new Project("My project"));
-  // const project = new Project("My project");
+  const [project, setProject] = useState({
+    title: "My project",
+    columns: [],
+  });
 
   function changeProjectTitle(newTitle){
     project.title = newTitle;
     setProject(project);
   }
-
 
   return (
     <div className="container">
@@ -27,7 +25,7 @@ function App() {
           </Title>
         </Header>
         
-        <ColumList project = {project}/>
+        <ColumList project = {project} setProject={setProject} />
     </div>
   );
 }

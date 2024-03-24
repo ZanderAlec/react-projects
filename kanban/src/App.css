@@ -51,11 +51,33 @@
   width: 20rem;
   flex-shrink:0;
   padding: 2% 1%;
+  display: flex; 
+  flex-direction: column;
+  gap: 1rem;
+  background-color: var(--pink);
+}
+
+.column-body{
   display: flex;
   flex-direction: column;
   gap: 1rem;
   overflow-y: auto;
+}
+
+.bkg-yellow{
+  background-color: var(--yellow);
+}
+
+.bkg-blue{
+  background-color: var(--blue);
+}
+
+.bkg-pink{
   background-color: var(--pink);
+} 
+
+.bkg-green{
+  background-color: var(--green);
 }
 
 .column--new{
@@ -82,7 +104,47 @@
 
 .col-head-bttms{
   align-self: flex-start;
+  position: relative;
+}
 
+/*dropdown*/
+.dropdown{
+  position: absolute;
+  border-radius: 2px;
+  top: 2.5rem;
+  right: -2.5rem;
+  background-color: var(--white);
+  z-index: 1;
+}
+
+.drop-arrow{
+  width: 1rem;
+  border-radius: 0;
+  height: 1rem;
+  position: absolute;
+  border-bottom: 2px solid black;
+  border-left: 2px solid black; 
+  background-color: var(--white);
+  top: -0.6rem;
+  z-index: 1;
+  left: 50%;
+  transform: rotate(135deg);
+}
+
+.dropdown-list{
+  position: relative;
+  z-index: 2;
+  list-style: none;
+  padding: 0.2rem 0 ;
+}
+
+.dropdown-list li{
+  padding: 10px 30px;
+}
+
+.dropdown-list li:hover{
+  cursor: pointer;
+  background-color: var(--dark-grey);
 }
 
 .task-num{
@@ -128,7 +190,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* padding-bottom: 0.5rem; */
+}
+
+.card-title--icons{
+  display: flex;
+  gap:1rem;
 }
 
 
@@ -158,8 +224,8 @@
 }
 
 .icon{
-  width: 1rem;
-  height: 1rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .icon--confirm{
@@ -228,7 +294,6 @@
 }
 
 .newTask-input{
-  /* outline: 1px solid red; */
   padding-top: 2rem;
 }
 

@@ -21,7 +21,14 @@ export const NewTask = ({
         const [hour, minutes] = time.split(":");
         const dateFormat = new Date(year,parseInt(month) - 1,parseInt(day), parseInt(hour), parseInt(minutes)) ;
 
-        createTask(title, priority, dateFormat);
+        const newTask = {
+            title,
+            priority,
+            deadline: dateFormat,
+            completed: false
+        }
+
+        createTask(newTask);
         onClose();
     }
 
