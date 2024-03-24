@@ -20,9 +20,7 @@ function App() {
     <div className="container">
         
         <Header>
-          <Title  className = "header-title" onRename={changeProjectTitle}>
-            {project.title}
-          </Title>
+          <Title  className = "header-title" onRename={changeProjectTitle} title = {project.title}/>
         </Header>
         
         <ColumList project = {project} setProject={setProject} />

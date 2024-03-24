@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-export const Title = ({ className, onRename, maxLength = 50, children }) => {
+export const Title = ({ className, onRename, maxLength = 50, title }) => {
 
+    const [value, setValue] = useState("");
 
-    const [value, setValue] = useState(children);
-
+    useEffect(() => setValue(title)
+    , [title]);
 
     function handleChange(event) {
         // Set the dinamic size of textArea:

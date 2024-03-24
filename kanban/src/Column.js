@@ -2,6 +2,7 @@ import { NewTask } from "./NewTask";
 import { Task } from "./Task"
 import { Title } from "./Title"
 import dots_icon from "./assets/dots-icon.png"
+import delete_icon from "./assets/delete-icon.png"
 
 
 import { useCallback, useState } from "react";
@@ -33,14 +34,19 @@ export const Column = ({ column, rename, onDelete, className }) => {
         setDropdown((prev) => !prev)
     }
 
+    function handleDelete(){
+        setDropdown(false);
+        onDelete();
+    }
+
 
     return <div className={`column card-box ${className}`}>
         <div className="column-header">
             <div className="column-header">
                 <div className="task-num icon-box--rounded">{column.tasks.length}</div>
-                <Title className={"col-title"} onRename={rename}>
-                    {column.title}
-                </Title>
+                <Title className={"col-title"} onRename={rename} title = {column.title}/>
+             
+
             </div>
 
             <div class="col-head-bttms">
@@ -51,7 +57,7 @@ export const Column = ({ column, rename, onDelete, className }) => {
                 {dropdown &&
                     <div  className="dropdown card-box">
                         <ul className="dropdown-list">
-                            <li onClick={() => onDelete()}>Delete</li>
+                            <li onClick={() => handleDelete()}><img className="icon" src={delete_icon} alt=""/> Delete</li>
                         </ul>
 
                         <div className="drop-arrow"></div>

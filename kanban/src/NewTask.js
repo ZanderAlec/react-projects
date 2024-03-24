@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const NewTask = ({
     onClose,
@@ -6,14 +6,39 @@ export const NewTask = ({
     task = {
         title: "",
         priority: "",
-        date: ""
+        deadline: ""
     }
 }) => {
 
 
     const [title, setTitle] = useState(task.title);
     const [priority, setPriority] = useState(task.priority);
-    const [deadline, setDeadline] = useState("")
+    const [deadline, setDeadline] = useState("");
+
+    useEffect(() => {
+
+        if(!task.deadline)
+            return
+
+        let [day, month, year, hours, minutes] = [task.deadline.getDate(), task.deadline.getMonth()+1, task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
+        
+        if(day < 10)
+            day = "0"+day 
+
+        if(month < 10)
+            month = "0"+month 
+
+        if(hours < 10)
+            hours = "0"+hours
+
+        if(minutes < 10)
+            minutes = "0"+minutes
+
+        const formatedDate = `${year}-${month}-${day}T${hours}:${minutes}`
+
+        setDeadline(formatedDate);
+    },[]);
+
 
     function handleSubmit() {
         const [date,time] = deadline.split("T");         
@@ -56,10 +81,10 @@ export const NewTask = ({
                     <label for="">Priority</label>
                     <select className=" icon-box " 
                         onChange={(event) => setPriority(event.target.value)}>
-                            <option selected></option>
-                            <option selected = {task.priority === "low"} value="low">low</option>
-                            <option selected = {task.priority === "medium"} value="medium">medium</option>
-                            <option selected = {task.priority === "high"} value="high">high</option>
+                            <option ></option>
+                            <option defaultValue = {task.priority === "low"} value="low">low</option>
+                            <option defaultValue = {task.priority === "medium"} value="medium">medium</option>
+                            <option defaultValue = {task.priority === "high"} value="high">high</option>
                     </select>
                 </div>
 
@@ -67,6 +92,7 @@ export const NewTask = ({
                     <label for="">Deadline</label>
                     <input type="datetime-local"
                         onChange={(event) => setDeadline(event.target.value)}
+                        value = {deadline}
                     ></input>
                 </div>
             

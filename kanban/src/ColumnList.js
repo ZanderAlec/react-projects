@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { Column } from "./Column"
 
-function getColor (){
-    const colorList = ["bkg-pink", "bkg-blue", 'bkg-yellow', "bkg-green"]
-    let counter = 0;
-    
-    return function (){
-        let color = colorList[counter];
-        counter+1 === colorList.length ? counter = 0 : counter++;
-        return color;
-    }
-}
 
 export const ColumList = ({project, setProject}) => {
-
     const [count, setCount] = useState(1);
-    const colorGetter = getColor(); 
+
+    const colorGetter = (function (){
+        const colorList = ["bkg-pink", "bkg-blue", 'bkg-yellow', "bkg-green"]
+        let counter = 0;
+        
+        return function (){
+            let color = colorList[counter];
+            counter+1 === colorList.length ? counter = 0 : counter++;
+            return color;
+        }
+    })();
 
     function changeColName(id, newTitle){
-        project.columns[id].title = newTitle;
+        const editedCol = [...project.columns];
+        editedCol[id].title = newTitle;
+        setProject({...project, columns: editedCol});
     }
 
     function handleNewCol(){
@@ -27,8 +28,10 @@ export const ColumList = ({project, setProject}) => {
             tasks: []
         }
 
-        project.columns.push(newCol);
+        const newList = [...project.columns];
+        newList.push(newCol);
         setCount(count + 1)
+        setProject({...project, columns: newList});
     }
 
     function handleDelete(id) {

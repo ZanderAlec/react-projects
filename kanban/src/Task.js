@@ -10,8 +10,6 @@ export const Task = ({ task, onDelete, onEdit }) => {
     const [toggle, setToggle] = useState(false);
     const [deadlineMsg, setDeadlineMsg] = useState("");
 
-    const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [task.deadline.getDate(), task.deadline.getMonth(), task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
-
     function handleComplete() {
         const newStatus = !task.completed;
         onEdit({ ...task, completed: newStatus })
@@ -21,26 +19,54 @@ export const Task = ({ task, onDelete, onEdit }) => {
         onEdit(editedTask);
     }
 
+    function formateDateTime(day,month,year,hours,minutes){
+       
+        const d = day > 10 ? day : "0"+day;
+        const m = month > 10 ? month+1 : "0"+(month+1);
+        const h = hours > 10 ? hours : "0"+hours;
+        const min = minutes > 10 ? minutes : "0"+minutes;
+        
+        const formDate = `${year}-${m}-${d}`
+        const formTime = `${h}:${min}`
+
+        return [formDate, formTime];
+    }
+
     useEffect(() => {
         const date = new Date();
         const [day, month, year, hours, minutes] = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
-        const joinDate = (day + month + year + hours + minutes);
-        const joinDeadDate = (deadDay + deadMonth + deadYear + deadHour + deadMinute)
+        const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [task.deadline.getDate(), task.deadline.getMonth(), task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
+        const [formatedDate, formatedTime] = formateDateTime(deadDay, deadMonth, deadYear, deadHour, deadMinute);
 
-        if (joinDate > joinDeadDate)
-            setDeadlineMsg("Expired");
+        //today
+        if(day === deadDay && month === deadMonth && year === deadYear){
+            //still in time
+            if(hours === deadHour && minutes <= deadMinute)
+                return setDeadlineMsg(`Today ${ formatedTime }`);
 
-        else if (joinDeadDate === joinDate + 1)
-            setDeadlineMsg("Tomorrow");
+            //missed
+            if((hours === deadHour && minutes > deadMinute)
+                || (hours > deadHour))
+                return setDeadlineMsg(`Expired today ${ formatedTime }`);
+        }
 
-        else if (joinDate === joinDeadDate)
-            setDeadlineMsg("Today");
+        //tomorrow
+        else if(day+1 === deadDay && month === deadMonth && year === deadYear){
+            setDeadlineMsg(`Tomorrow ${ formatedTime }`);
+        }
 
+        //Expired
+        else if((year > deadYear) || (year === deadYear && month > deadMonth)
+            ||( year === deadYear && month === deadMonth && day > deadDay)){
+                setDeadlineMsg(`Expired ${ formatedDate } ${ formatedTime }`);
+        }
+        
+        //in time
         else
-            setDeadlineMsg("");
+            setDeadlineMsg(`${ formatedDate } ${ formatedTime }`);
+
 
     }, [deadlineMsg, task.deadline]);
-
 
 
     return <div className="card card-box">
@@ -64,10 +90,7 @@ export const Task = ({ task, onDelete, onEdit }) => {
 
         <div className="card-title">
 
-            <p>
-                {deadlineMsg ? deadlineMsg : `${deadYear}-${deadMonth}-${deadDay}`}
-                {` ${deadHour}:${deadMinute}`}
-            </p>
+            <p> { deadlineMsg } </p>
 
             <button className={` icon-box--rounded  ${task.completed && "icon--confirm"}`}
                 onClick={() => handleComplete()}>
