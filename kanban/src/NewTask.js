@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { UseFormatDate } from "./hooks/useFormatDate";
 
 export const NewTask = ({
     onClose,
@@ -15,29 +16,19 @@ export const NewTask = ({
     const [priority, setPriority] = useState(task.priority);
     const [deadline, setDeadline] = useState("");
 
+    const [formateDate, formateTime] = UseFormatDate();
+
     useEffect(() => {
-
         if(!task.deadline)
-            return
+             return
 
-        let [day, month, year, hours, minutes] = [task.deadline.getDate(), task.deadline.getMonth()+1, task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
-        
-        if(day < 10)
-            day = "0"+day 
+        const fDate = formateDate(task.deadline);
+        const fTime = formateTime(task.deadline);
 
-        if(month < 10)
-            month = "0"+month 
-
-        if(hours < 10)
-            hours = "0"+hours
-
-        if(minutes < 10)
-            minutes = "0"+minutes
-
-        const formatedDate = `${year}-${month}-${day}T${hours}:${minutes}`
+        const formatedDate = `${fDate}T${fTime}`
 
         setDeadline(formatedDate);
-    },[]);
+    },[formateDate, formateTime, task.deadline]);
 
 
     function handleSubmit() {
@@ -59,24 +50,20 @@ export const NewTask = ({
 
     return <div className="fosco-bkg">
         <div className="newTask-window card-box">
-            <div className="newTask-header">
+            <div className="flex-btwn-center newTask-header">
                 <h2>new Task</h2>
-                <button onClick={() => onClose()} className = "bttm" type="">x</button>
+                <button onClick={() => onClose()} className = "bttm pointer" type="">x</button>
             </div>
       
             <form className="newTask-form" >
-            
-
                 <div className="newTask-input">
                     <label for="">Title</label>
                     <input className="icon-box" type="text" 
                         value = {title}
                         onChange={(event) => setTitle(event.target.value)}
                     />
-
                 </div>
 
-        
                 <div className="newTask-input">
                     <label for="">Priority</label>
                     <select className=" icon-box " 

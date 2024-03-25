@@ -40,7 +40,7 @@ export const ColumList = ({project, setProject}) => {
         setProject({...project, columns:  newList});
     }
 
-    return <div className="columList">
+    return <div className="columList flex">
         {project.columns && project.columns.map((column, id) => {
             return <Column column = {column} 
                     rename={(newTitle) => changeColName(id, newTitle) } 
@@ -48,7 +48,7 @@ export const ColumList = ({project, setProject}) => {
                     className={colorGetter()}/>
         })}
 
-        <div onClick = {() => handleNewCol()} className=" card-box column column--new">
+        <div onClick = {() => handleNewCol()} className=" dashed-box column column--new pointer bkg-grey">
             <p>+ New Col</p>
         </div>
     </div>

@@ -4,11 +4,14 @@ import edit_icon from "./assets/edit-icon.png"
 import delete_icon from "./assets/delete-icon.png"
 
 import { NewTask } from "./NewTask"
+import { UseToggle } from "./hooks/useToggle"
+import { UseFormatDate } from "./hooks/useFormatDate"
 
 
 export const Task = ({ task, onDelete, onEdit }) => {
-    const [toggle, setToggle] = useState(false);
+    const [toggle, setToggle] = UseToggle();
     const [deadlineMsg, setDeadlineMsg] = useState("");
+    const [formateDate, formateTime] = UseFormatDate();
 
     function handleComplete() {
         const newStatus = !task.completed;
@@ -19,24 +22,13 @@ export const Task = ({ task, onDelete, onEdit }) => {
         onEdit(editedTask);
     }
 
-    function formateDateTime(day,month,year,hours,minutes){
-       
-        const d = day > 10 ? day : "0"+day;
-        const m = month > 10 ? month+1 : "0"+(month+1);
-        const h = hours > 10 ? hours : "0"+hours;
-        const min = minutes > 10 ? minutes : "0"+minutes;
-        
-        const formDate = `${year}-${m}-${d}`
-        const formTime = `${h}:${min}`
-
-        return [formDate, formTime];
-    }
-
     useEffect(() => {
         const date = new Date();
         const [day, month, year, hours, minutes] = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
         const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [task.deadline.getDate(), task.deadline.getMonth(), task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
-        const [formatedDate, formatedTime] = formateDateTime(deadDay, deadMonth, deadYear, deadHour, deadMinute);
+        
+        const formatedDate = formateDate(task.deadline);
+        const formatedTime = formateTime(task.deadline);
 
         //today
         if(day === deadDay && month === deadMonth && year === deadYear){
@@ -66,33 +58,32 @@ export const Task = ({ task, onDelete, onEdit }) => {
             setDeadlineMsg(`${ formatedDate } ${ formatedTime }`);
 
 
-    }, [deadlineMsg, task.deadline]);
+    }, [task.deadline, formateDate, formateTime]);
 
 
     return <div className="card card-box">
-        <div className="card-title">
+        <div className="flex-btwn-center">
 
             <div className={`tag icon-box tag--${task.priority}`}>
                 {task.priority}
             </div>
 
-            <div class="card-title--icons">
-                <button onClick={() => setToggle(true)} className="bttm"><img className="icon" src={edit_icon} alt="edit" /></button>
-                <button onClick = {() => onDelete()} className="bttm"><img className="icon" src={delete_icon} alt="delete" /></button>
+            <div class="flex">
+                <button onClick={() => setToggle(true)} className="bttm pointer"><img className="icon" src={edit_icon} alt="edit" /></button>
+                <button onClick = {() => onDelete()} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
             </div>
 
         </div>
 
         <h2> {task.title} </h2>
 
-        {toggle && <NewTask onClose={() => setToggle(false)} createTask={editTask} task={task} />}
+        {toggle && <NewTask onClose={setToggle} createTask={editTask} task={task} />}
 
-
-        <div className="card-title">
+        <div className="flex-btwn-center">
 
             <p> { deadlineMsg } </p>
 
-            <button className={` icon-box--rounded  ${task.completed && "icon--confirm"}`}
+            <button className={` icon-box icon-box--rounded ${task.completed && "icon--confirm"}`}
                 onClick={() => handleComplete()}>
                 <img className="icon " src={check_icon} alt="v" />
             </button>

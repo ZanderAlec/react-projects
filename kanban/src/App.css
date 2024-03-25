@@ -1,22 +1,33 @@
 .container{
   /* outline: 1px solid red; */
   padding: 2%;
+  height: 100vh;
   background-color: var(--grey);
 }
 
 .header{
-  /* border: 1px solid blue; */
   margin-bottom: 2rem;
 }
 
-.header-title{
+/*General----------------------*/
+
+.title-big{
   font-size: 3rem;
+}
+
+.title-mid{
+  font-size: 1rem;
 }
 
 .card-box{
   border-radius: 10px;
   border: solid black;
   border-width: 2px 4px 4px 2px;
+}
+
+.dashed-box{
+  border: 3px dashed black;
+  border-radius: 15px;
 }
 
 .icon-box{
@@ -27,41 +38,8 @@
 }
 
 .icon-box--rounded{
-  border-radius: 20px;
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-  border: solid black;
-  border-width: 1px 3px 3px 1px;
-}
-
-.columList{
-  border-top: 2px solid black;
-  padding-top: 2rem;
-  gap: 2rem;
-  white-space: nowrap;
-  overflow-x: auto;
-  /* align-items: center; */
-  display: flex;
-}
-
-.column{
-  height: auto;
-  max-height: 70vh;
-  width: 20rem;
-  flex-shrink:0;
-  padding: 2% 1%;
-  display: flex; 
-  flex-direction: column;
-  gap: 1rem;
-  background-color: var(--pink);
-}
-
-.column-body{
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  overflow-y: auto;
+  border-radius: 50%;
+  line-height: 2.5rem;
 }
 
 .bkg-yellow{
@@ -80,26 +58,65 @@
   background-color: var(--green);
 }
 
+.bkg-grey{
+  background-color: var(--grey); 
+}
+
+.bkg-white{
+  background-color: var(--white);
+}
+
+.pointer:hover{
+  cursor:pointer;
+}
+
+
+.flex, .flex-col, .flex-btwn-center{
+  display: flex;
+}
+
+.flex, .flex-col{
+  gap: 1rem;
+}
+
+.flex-col{
+  flex-direction: column;
+}
+
+.flex-btwn-center{
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+
+/*-------------------------------*/
+
+.columList{
+  border-top: 2px solid black;
+  padding-top: 2rem;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.column{
+  height: auto;
+  max-height: 70vh;
+  width: 20rem;
+  flex-shrink:0;
+  padding: 2% 1%;
+}
+
+.column-body{
+  overflow-y: auto;
+}
+
 .column--new{
-  border: 3px dashed black; 
   height: 5rem;
-  background-color: var(--grey);
 }
 
 .column--new:hover{
-  cursor: pointer;
   background-color: var(--blue);
-}
-
-.column-header{
-  display:flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.col-title{
-  text-wrap: wrap;
-  word-break: break-all;
 }
 
 .col-head-bttms{
@@ -143,14 +160,10 @@
 }
 
 .dropdown-list li:hover{
-  cursor: pointer;
   background-color: var(--dark-grey);
 }
 
 .task-num{
-  border-radius: 50%;
-  width:2rem;
-  height: 2rem;
   text-align: center;
   font-size: 1rem;
   line-height: 180%;
@@ -163,11 +176,8 @@
 
 
 .addTask-bttm{
-  border: 3px dashed black;
-  border-radius: 15px;
   width: 100%;
   padding: 1rem;
-  background-color: var(--white);
 }
 
 .addTask-bttm:hover{
@@ -175,9 +185,6 @@
   color: var(--white);
 }
 
-.addTask-bttm:hover{
-  cursor: pointer;
-}
 
 .card{
   text-wrap: wrap;
@@ -185,18 +192,6 @@
   padding: 1rem;
   background-color: var(--white);
 }
-
-.card-title{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-title--icons{
-  display: flex;
-  gap:1rem;
-}
-
 
 
 .tag{
@@ -242,15 +237,12 @@
   border: none;
   width: 100%;
   resize: none;
-  
-
 }
 
 .title-input:focus{
   outline: solid;
   border-radius: 10px;
 }
-
 
 .input-handler{
   position: absolute;
@@ -279,14 +271,10 @@
 }
 
 .newTask-header{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   padding: 1rem;
   background-color: var(--green);
   border-radius: 7px 7px 0 0px;
   border-bottom: 2px solid black;
-
 }
 
 .newTask-form{
@@ -313,10 +301,6 @@
   font-size: 1.5rem;
 }
 
-.bttm:hover{
-  cursor: pointer;
-}
-
 .newtask-bttm{
   display: block;
   width: 50%;
@@ -324,7 +308,6 @@
 }
 
 .newtask-bttm:hover{
-  cursor: pointer;
   background-color: var(--green);
 }
 

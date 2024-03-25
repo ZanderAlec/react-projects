@@ -6,14 +6,15 @@ import delete_icon from "./assets/delete-icon.png"
 
 
 import { useCallback, useState } from "react";
+import { UseToggle } from "./hooks/useToggle";
 
 
 export const Column = ({ column, rename, onDelete, className }) => {
 
     const [, updateState] = useState();
     const forceUpdate = useCallback(() => updateState({}), []);
-    const [toggle, setToggle] = useState(false);
-    const [dropdown, setDropdown] = useState(false);
+    const [toggle, setToggle] = UseToggle()
+    const [dropdown, setDropdown] = UseToggle();
 
     function createTask(newTask) {
         column.tasks.push(newTask);
@@ -30,46 +31,43 @@ export const Column = ({ column, rename, onDelete, className }) => {
         forceUpdate();
     }
 
-    function handleDropdown() {
-        setDropdown((prev) => !prev)
-    }
 
     function handleDelete(){
-        setDropdown(false);
+        setDropdown();
         onDelete();
     }
 
 
-    return <div className={`column card-box ${className}`}>
-        <div className="column-header">
-            <div className="column-header">
-                <div className="task-num icon-box--rounded">{column.tasks.length}</div>
-                <Title className={"col-title"} onRename={rename} title = {column.title}/>
-             
+    return <div className={`column card-box flex-col ${className}`}>
+        <div className="flex-btwn-center">
+            <div className="flex-btwn-center">
+                <div className="task-num icon-box icon-box--rounded">
+                    {column.tasks.length}
+                </div>
 
+                <Title className={"title-mid"} onRename={rename} title = {column.title}/>
             </div>
 
             <div class="col-head-bttms">
-                <button className="bttm" onClick = {() => handleDropdown()} >
+                <button className="bttm pointer" onClick = {() => setDropdown()} >
                     <img className="icon " src={dots_icon} alt="..." />
                 </button>
 
                 {dropdown &&
                     <div  className="dropdown card-box">
                         <ul className="dropdown-list">
-                            <li onClick={() => handleDelete()}><img className="icon" src={delete_icon} alt=""/> Delete</li>
+                            <li className="pointer" onClick={() => handleDelete()}><img className="icon" src={delete_icon} alt=""/> Delete</li>
                         </ul>
 
                         <div className="drop-arrow"></div>
                     </div>
                 }
 
-
             </div>
 
         </div>
 
-        <div className="column-body">
+        <div className="column-body flex-col">
             {
                 column.tasks.map((task, id) => {
                     return <Task task={task} 
@@ -80,9 +78,9 @@ export const Column = ({ column, rename, onDelete, className }) => {
             }
 
 
-            <button onClick={() => setToggle(true)} className="addTask-bttm ">+ Add new task</button>
+            <button onClick={() => setToggle(true)} className="bkg-white dashed-box pointer addTask-bttm ">+ Add new task</button>
         </div>
-        {toggle && <NewTask onClose={() => setToggle(false)} createTask={createTask} />}
+        {toggle && <NewTask onClose={setToggle} createTask={createTask} />}
 
     </div>
 }
