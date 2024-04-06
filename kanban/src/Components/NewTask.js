@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UseFormatDate } from "./hooks/useFormatDate";
+import { UseFormatDate } from "../hooks/useFormatDate";
 
 export const NewTask = ({
     onClose,
@@ -8,7 +8,8 @@ export const NewTask = ({
         title: "",
         priority: "",
         deadline: ""
-    }
+    },
+    columnId
 }) => {
 
 
@@ -37,14 +38,7 @@ export const NewTask = ({
         const [hour, minutes] = time.split(":");
         const dateFormat = new Date(year,parseInt(month) - 1,parseInt(day), parseInt(hour), parseInt(minutes)) ;
 
-        const newTask = {
-            title,
-            priority,
-            deadline: dateFormat,
-            completed: false
-        }
-
-        createTask(newTask);
+        createTask(columnId, title, priority, dateFormat, false);
         onClose();
     }
 

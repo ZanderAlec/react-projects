@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import check_icon from "./assets/check-icon.webp"
-import edit_icon from "./assets/edit-icon.png"
-import delete_icon from "./assets/delete-icon.png"
+import check_icon from "../assets/check-icon.webp"
+import edit_icon from "../assets/edit-icon.png"
+import delete_icon from "../assets/delete-icon.png"
 
 import { NewTask } from "./NewTask"
-import { UseToggle } from "./hooks/useToggle"
-import { UseFormatDate } from "./hooks/useFormatDate"
+import { UseToggle } from "../hooks/useToggle"
+import { UseFormatDate } from "../hooks/useFormatDate"
 
 
 export const Task = ({ task, onDelete, onEdit }) => {
@@ -15,11 +15,13 @@ export const Task = ({ task, onDelete, onEdit }) => {
 
     function handleComplete() {
         const newStatus = !task.completed;
-        onEdit({ ...task, completed: newStatus })
+        onEdit(task.id, task.columnId, task.title, task.priority, task.deadline, newStatus);
     }
 
-    function editTask(editedTask) {
-        onEdit(editedTask);
+
+    function editTask(columnId, title, priority, deadline, completed) {
+        /*Pass the local id */
+        onEdit(task.id, columnId, title, priority, deadline, completed);
     }
 
     useEffect(() => {
@@ -70,14 +72,12 @@ export const Task = ({ task, onDelete, onEdit }) => {
 
             <div class="flex">
                 <button onClick={() => setToggle(true)} className="bttm pointer"><img className="icon" src={edit_icon} alt="edit" /></button>
-                <button onClick = {() => onDelete()} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
+                <button onClick = {() => onDelete(task.id)} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
             </div>
 
         </div>
 
         <h2> {task.title} </h2>
-
-        {toggle && <NewTask onClose={setToggle} createTask={editTask} task={task} />}
 
         <div className="flex-btwn-center">
 
@@ -88,6 +88,9 @@ export const Task = ({ task, onDelete, onEdit }) => {
                 <img className="icon " src={check_icon} alt="v" />
             </button>
         </div>
+
+        {/*Edit task */}
+        {toggle && <NewTask onClose={setToggle} createTask={editTask} task={task} columnId={task.columnId}/>}
 
     </div>
 }

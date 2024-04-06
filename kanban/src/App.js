@@ -1,29 +1,28 @@
 import './App.css';
-import { ColumList } from './ColumnList';
-import { Header } from './Header';
-import { Title } from "./Title"
+import { KanbanBoard } from './Components/KanbanBoard';
+import { Header } from './Components/Header';
+import { Title } from "./Components/Title"
 import {useState} from 'react'
 
 function App() {
+
+  const [projectTitle, setProjectTitle] = useState("My project");
 
   const [project, setProject] = useState({
     title: "My project",
     columns: [],
   });
 
-  function changeProjectTitle(newTitle){
-    project.title = newTitle;
-    setProject(project);
-  }
+
 
   return (
     <div className="container">
         
         <Header>
-          <Title  className = "title-big" onRename={changeProjectTitle} title = {project.title}/>
+          <Title  className = "title-big" onRename={setProjectTitle} title = {projectTitle}/>
         </Header>
         
-        <ColumList project = {project} setProject={setProject} />
+        <KanbanBoard project = {project} setProject={setProject} />
     </div>
   );
 }
