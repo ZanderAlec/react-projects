@@ -10,8 +10,8 @@ export const UseFormatDate = () => {
 
     const formateTime = (date) => {
         const [hour, minutes] = [date.getHours(), date.getMinutes()];
-        const h = hour > 10 ? hour : "0"+hour;
-        const m = minutes > 10 ? minutes : "0"+minutes;
+        const h = hour 
+        const m = minutes 
 
         return `${h}:${m}`;
     }

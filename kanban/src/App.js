@@ -15,12 +15,11 @@ function App() {
 
 
   return (
-    <div className="container">
-        
+    <div >
         <Header>
           <Title  className = "title-big" onRename={setProjectTitle} title = {projectTitle}/>
         </Header>
-        
+
         <KanbanBoard project = {project} setProject={setProject} />
     </div>
   );

@@ -41,25 +41,25 @@ export const ColumnOverlay = ({ column, rename, onDelete, tasks, createTask, del
         <div
             {...attributes}
             {...listeners}
-            className="flex-btwn-center col-header"
+            className="flex-btwn-center col-header grab"
         >
             <div className="flex-btwn-center ">
                 <div className="task-num icon-box icon-box--rounded">
                     {tasks.length}
                 </div>
 
-                <Title className={"title-mid"} onRename={rename} title={column.title} />
+                <Title className={"title-mid"}  title={column.title} />
             </div>
 
             <div class="col-head-bttms">
-                <button className="bttm pointer">
+                <button className="bttm pointer" onClick={() => setDropdown()} >
                     <img className="icon " src={dots_icon} alt="..." />
                 </button>
 
                 {dropdown &&
                     <div className="dropdown card-box">
                         <ul className="dropdown-list">
-                            <li className="pointer"><img className="icon" src={delete_icon} alt="" /> Delete</li>
+                            <li className="pointer" onClick={() => onDelete(column.id)}><img className="icon" src={delete_icon} alt="" /> Delete</li>
                         </ul>
 
                         <div className="drop-arrow"></div>
@@ -67,23 +67,25 @@ export const ColumnOverlay = ({ column, rename, onDelete, tasks, createTask, del
                 }
 
             </div>
+
         </div>
 
         <div className=" column-body flex-col">
-            {
-                tasks.map((task) => {
-                    return <Task
+
+                {tasks.map((task) => (
+                    <Task
                         key={task.id}
                         task={task}
                         onDelete={deleteTask}
                         onEdit={editTask}
                     />
-                })
-            }
+                ))}
 
-
-            <button className="bkg-white dashed-box pointer addTask-bttm ">+ Add new task</button>
+            <button onClick={() => setToggle(true)} className="dashed-box pointer addTask-bttm ">+ Add task</button>
         </div>
+
+
+        {toggle && <NewTask onClose={setToggle} createTask={createTask} columnId={column.id} />}
 
     </div>
 }

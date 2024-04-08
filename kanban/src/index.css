@@ -1,14 +1,15 @@
 :root{
-  --green: #00995E;
-  --yellow: #FFC567;
-  --blue: #058CD7;
+  --green: #8CBEB2;
+  --yellow: #F2C246;
+  --blue: #76A4B2;
   --pink: #FD5A46;
-  --grey: #f5f2ec;
-  --dark-grey: #ede7dd;
-  --white: #f7f7f7;
-  --status-green: #4CCD99;
-  --status-orange:#FFAD60;
-  --status-red: #D9534F;
+  --grey: #C7D1D4;
+  --dark-grey: #444e5b;
+  --black: #1E2630;
+  --white: #F4FFFF;
+  --status-green: #7EDE93;
+  --status-orange:#F3B562;
+  --status-red: #F06060;
 }
 
 
@@ -16,4 +17,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Lexend Mega", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+body{
+  background-color: var(--white);
 }

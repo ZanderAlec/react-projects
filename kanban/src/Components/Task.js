@@ -80,40 +80,45 @@ export const Task = ({ task, onDelete, onEdit }) => {
 
     }, [task.deadline, formateDate, formateTime]);
 
-    if(isDragging){
+    if (isDragging) {
         return <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className="card card-box"
-    >
-        <div className="flex-btwn-center">
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            {...listeners}
+            className=" card drag-box bkg-dark-grey"
+        >
 
-            <div className={`tag icon-box tag--${task.priority}`}>
-                {task.priority}
-            </div>
+            <div className="drag-content">
 
-            <div class="flex">
-                <button onClick={() => setToggle(true)} className="bttm pointer"><img className="icon" src={edit_icon} alt="edit" /></button>
-                <button onClick={() => onDelete(task.id)} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
+
+                <div className="flex-btwn-center ">
+
+                    <div className={`tag icon-box tag--${task.priority}`}>
+                        {task.priority}
+                    </div>
+
+                    <div class="flex">
+                        <button onClick={() => setToggle(true)} className="bttm pointer"><img className="icon" src={edit_icon} alt="edit" /></button>
+                        <button onClick={() => onDelete(task.id)} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
+                    </div>
+
+                </div>
+
+                <h2> {task.title} </h2>
+
+                <div className="flex-btwn-center">
+
+                    <p className="deadline"> {deadlineMsg} </p>
+
+                    <button className={` icon-box icon-box--rounded ${task.completed && "icon--confirm"}`}
+                        onClick={() => handleComplete()}>
+                        <img className="icon " src={check_icon} alt="v" />
+                    </button>
+                </div>
             </div>
 
         </div>
-
-        <h2> {task.title} </h2>
-
-        <div className="flex-btwn-center">
-
-            <p> {deadlineMsg} </p>
-
-            <button className={` icon-box icon-box--rounded ${task.completed && "icon--confirm"}`}
-                onClick={() => handleComplete()}>
-                <img className="icon " src={check_icon} alt="v" />
-            </button>
-        </div>
-
-    </div>
     }
 
 
@@ -122,7 +127,7 @@ export const Task = ({ task, onDelete, onEdit }) => {
         style={style}
         {...attributes}
         {...listeners}
-        className="card card-box"
+        className="card bkg-white card-box grab"
     >
         <div className="flex-btwn-center">
 
@@ -130,20 +135,20 @@ export const Task = ({ task, onDelete, onEdit }) => {
                 {task.priority}
             </div>
 
-            <div class="flex">
+            <div className="flex-btwn-center">
                 <button onClick={() => setToggle(true)} className="bttm pointer"><img className="icon" src={edit_icon} alt="edit" /></button>
                 <button onClick={() => onDelete(task.id)} className="bttm pointer"><img className="icon" src={delete_icon} alt="delete" /></button>
             </div>
 
         </div>
 
-        <h2> {task.title} </h2>
+        <h2 className = "task-title"> {task.title} </h2>
 
         <div className="flex-btwn-center">
 
-            <p> {deadlineMsg} </p>
+            <p className="deadline"> 🕗 {deadlineMsg} </p>
 
-            <button className={` icon-box icon-box--rounded ${task.completed && "icon--confirm"}`}
+            <button className={` icon-box pointer icon-box--rounded ${task.completed && "icon--confirm"}`}
                 onClick={() => handleComplete()}>
                 <img className="icon " src={check_icon} alt="v" />
             </button>

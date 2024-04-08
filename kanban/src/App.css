@@ -1,40 +1,76 @@
-.container{
-  /* outline: 1px solid red; */
-  padding: 2%;
-  height: 100vh;
-  background-color: var(--grey);
+/*// Header -----------------------------*/
+
+.container, 
+.header{
+  padding: 2% 4%;
 }
+
+.container{
+  height: 100%;
+}
+
 
 .header{
-  margin-bottom: 2rem;
+  border-bottom: 4px solid black;
 }
 
-/*General----------------------*/
+/* // General----------------------*/
 
 .title-big{
   font-size: 3rem;
 }
 
 .title-mid{
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .card-box{
-  border-radius: 10px;
-  border: solid black;
-  border-width: 2px 4px 4px 2px;
+  border-radius: 15px;
+  border: solid var(--black);
+  position: relative;
 }
 
+/* .card-box::before{
+  content: "";
+  width: inherit;
+  height: inherit;
+  background-color: var(--black);
+  position: absolute;
+  left: 0.2rem;
+  top: 0.2rem;
+
+  z-index: -1;
+  border-radius: inherit;
+} */
+
 .dashed-box{
+  border: 3px dashed var(--black);
+  border-radius: 15px;
+}
+
+.dashed-box:hover{
+  border-style: solid;
+  background-color: var(--yellow);
+}
+
+.drag-box{
+  opacity: 0.6;
   border: 3px dashed black;
   border-radius: 15px;
+  /* background-color: var(--grey); */
+  position: relative;
+  height: inherit;
+}
+
+.drag-content{
+  visibility: hidden;
 }
 
 .icon-box{
   width: 2rem;
   height: 2rem;
-  border: solid black;
-  border-width: 1px 3px 3px 1px;
+  border: solid black 2px;
+  /* border-width: 1px 3px 3px 1px; */
 }
 
 .icon-box--rounded{
@@ -58,6 +94,10 @@
   background-color: var(--green);
 }
 
+.bkg-dark-grey{
+  background-color: var(--dark-grey);
+}
+
 .bkg-grey{
   background-color: var(--grey); 
 }
@@ -69,6 +109,17 @@
 .pointer:hover{
   cursor:pointer;
 }
+
+.grab:hover{
+  cursor: grab;
+}
+
+.grabbing{
+  cursor: grabbing;
+}
+
+
+
 
 
 .flex, .flex-col, .flex-btwn-center{
@@ -90,17 +141,19 @@
 
 
 
-/*-------------------------------*/
+/*//  KanbanBoard -------------------------------*/
 
 .columList{
-  border-top: 2px solid black;
+  /* border-top: 2px solid black; */
   padding-top: 2rem;
   white-space: nowrap;
   overflow-x: auto;
 }
 
+/*// Columns --------------------------------------------*/
+
 .column{
-  height: auto;
+  height: 70vh;
   max-height: 70vh;
   width: 20rem;
   flex-shrink:0;
@@ -114,21 +167,28 @@
 
 .column-body{
   overflow-y: auto;
-    padding: 2% 4%;
+  padding: 2% 4%;
 
 }
 
 .column--new{
   height: 5rem;
+  display: flex;
+  align-items: center;
+  padding-left: 2rem;
 }
 
-.column--new:hover{
-  background-color: var(--blue);
-}
 
 .col-head-bttms{
   align-self: flex-start;
   position: relative;
+}
+
+.addTask-bttm{
+  width: 100%;
+  padding: 1.5rem;
+  font-size: 1.1rem;
+  background: none;
 }
 
 /*dropdown*/
@@ -181,35 +241,23 @@
   align-self: flex-start;
 }
 
-
-.addTask-bttm{
+/*// Tasks------------------------*/
+.card{
+  text-wrap: wrap;
+  word-break: break-all;
   width: 100%;
   padding: 1rem;
 }
 
-.addTask-bttm:hover{
-  background-color:black;
-  color: var(--white);
-}
-
-
-.card{
-  text-wrap: wrap;
-  word-break: break-all;
-  padding: 1rem;
-  background-color: var(--white);
-}
-
-
 .tag{
- display: inline-block;
-  width: auto;
-  height: auto;
+  display: inline-block;
+  width: 6rem;
+  text-align: center;
+  height: 1.5rem;
   padding: 0 1rem;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-bottom: 0.5rem;
-
 }
 
 .tag--high{
@@ -223,6 +271,14 @@
 
 .tag--low{
   background-color: var( --status-green);
+}
+
+.deadline{
+  color: var(--dark-grey);
+}
+
+.task-title{
+  margin: 0.8rem 0;
 }
 
 .icon{
@@ -258,7 +314,7 @@
   height: 100%;
 }
 
-/*New task---------*/
+/*// New task---------------*/
 .fosco-bkg{
   width: 100vw;
   height: 100vh;
@@ -267,25 +323,41 @@
   left: 0;
   background-color: rgb(0,0,0, 0.5);
   z-index: 2;
+
 }
 
+
 .newTask-window{
-  background-color: var(--yellow);
-  width: 30%;
+  width: 40rem;
   height: auto;
   margin: auto;
   transform: translateY(30%);
+  border: 4px solid var(--black)
 }
 
 .newTask-header{
-  padding: 1rem;
+  /* padding: 1rem; */
   background-color: var(--green);
-  border-radius: 7px 7px 0 0px;
+  /* border-radius: 7px 7px 0 0px; */
   border-bottom: 2px solid black;
+  align-items: center;
+}
+
+.newTask-close{
+  padding: 0.5rem 1rem;
+  /* height: 100%; */
+  border: none;
+  border-left: 2px solid var(--black);
+  outline: none;
+  font-size: 1.2rem;
+}
+
+.newTask-close:hover{
+  background-color: var(--status-red);
 }
 
 .newTask-form{
-  padding: 0 2rem;
+  padding: 0 6rem;
 }
 
 .newTask-input{
@@ -306,16 +378,31 @@
   border:0;
   background: none;
   font-size: 1.5rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.bttm:hover{
+  border-radius: 50%;
+  background-color: var(--yellow);
+}
+
+.newTask-title{
+  text-align: center;
+  flex-grow: 1;
 }
 
 .newtask-bttm{
   display: block;
-  width: 50%;
+  width:  10rem;
+  height: 3rem;
+  border-radius: 10px;
   margin: 2rem auto;
+  font-size: 1rem;
 }
 
-.newtask-bttm:hover{
-  background-color: var(--green);
+.newtask-bttm:hover:not(:disabled){
+  background-color: var(--yellow);
 }
 
 

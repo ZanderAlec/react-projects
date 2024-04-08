@@ -32,18 +32,6 @@ export const KanbanBoard = () => {
         return Math.floor(Math.random() * 10001)
     }
 
-    const colorGetter = (function () {
-        const colorList = ["bkg-pink", "bkg-blue", 'bkg-yellow', "bkg-green"]
-        let counter = 0;
-
-        return function () {
-            let color = colorList[counter];
-            counter + 1 === colorList.length ? counter = 0 : counter++;
-            return color;
-        }
-    })();
-
-
     function changeColName(id, title) {
         setColumns(
             columns.map(col => (
@@ -56,6 +44,7 @@ export const KanbanBoard = () => {
         const newCol = {
             id: generateId(),
             title: `New col ${columns.length + 1}`,
+            color: columns.length % 2 === 0 ? "bkg-green" : "bkg-blue"
         }
 
         setColumns([...columns, newCol]);
@@ -124,7 +113,7 @@ export const KanbanBoard = () => {
     /*Change the columns position*/
     function onDragEnd(event) {
         setActiveColumn(null);
-        // setActiveTask(null);
+        setActiveTask(null);
 
         const { active, over } = event;
 
@@ -208,7 +197,7 @@ export const KanbanBoard = () => {
     }
 
 
-        return <div className="columList flex">
+        return <div className="container columList flex">
             <DndContext
                 sensors={sensors}
                 onDragStart={onDragStart}
@@ -227,11 +216,11 @@ export const KanbanBoard = () => {
                             deleteTask={deleteTask}
                             editTask={editTask}
                             tasks={tasks.filter(task => task.columnId === column.id)}
-                            className={colorGetter()} />
+                            />
                     })}
                 </SortableContext>
 
-                <div onClick={() => createColumn()} className=" dashed-box column column--new pointer bkg-grey">
+                <div onClick={() => createColumn()} className=" dashed-box column column--new pointer bkg-white">
                     <p>+ New Col</p>
                 </div>
 
@@ -246,7 +235,6 @@ export const KanbanBoard = () => {
                                 deleteTask={deleteTask}
                                 editTask={editTask}
                                 tasks={tasks.filter(task => task.columnId === activeColumn.id)}
-                                className={colorGetter()}
                             />
                         }
 
@@ -255,8 +243,7 @@ export const KanbanBoard = () => {
                                 key={activeTask.id}
                                 task={activeTask}
                                 onDelete={deleteTask}
-                                onEdit={editTask}
-                            />
+                                onEdit={editTask}                            />
                         }
                     </DragOverlay>,
                     document.body
