@@ -1,0 +1,287 @@
+.container{
+  padding-inline: 10%;
+  /* outline: 1px solid red; */
+}
+
+/*//generals-------*/
+
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flex-btwn{
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.flex-btwn--center{
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+}
+
+.bttm,
+.watch-bttm{
+  border-radius: 40px;
+  border: none;
+  font-weight: bolder;
+  display: flex;
+  gap:0.5rem;
+  align-items: center;
+  height: fit-content;
+  max-height: fit-content;
+}
+
+.bttm{
+  padding: 1rem 2rem;
+}
+
+.watch-bttm{
+  padding-inline: 0.5rem;
+}
+
+.bttm-icon{
+  font-size: 1rem;
+}
+
+.icon--mid{
+  font-size: 2rem;
+}
+
+.bttm-icon--big{
+  font-size: 4rem;
+}
+
+.bttm:hover,
+.watch-bttm:hover{
+  cursor: pointer;
+  outline: 2px solid var(--dark-grey);
+}
+
+.bkg-light{
+  background-color: var(--white);
+}
+
+.bkg-white{
+  background-color: white;
+}
+
+.bkg-light,
+.bkg-white{
+  color: var(--dark-grey);
+}
+
+.bkg-yellow{
+  color:var(--white);
+  background-color: var(--yelow);
+}
+
+.img{
+  object-fit: cover;
+  width: 100%;
+}
+
+.icon{
+  outline: none;
+  border: none;
+  background: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.card-icon{
+  width: 5rem;
+  margin: auto;
+}
+
+/*//Header----------*/
+
+.header{
+  /* outline: 2px solid red; */
+  padding-block: 2rem;
+}
+
+.logo{
+  width: 10rem;
+}
+
+
+.menu li a {
+  /* outline: 1px solid red; */
+  padding: 1rem;
+  text-decoration: none;
+  color: var(--dark-grey);
+  font-weight: bold;  
+}
+
+.menu li a:hover{
+  border-bottom: 3px solid var(--dark-grey);
+}
+
+/*//Hero----------*/
+.hero{
+  background-image: url('./assets/home-banner-background.png') ;
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 45% 100%;
+}
+
+.home-banner{
+  width: 34rem;
+  position: absolute;
+  top: 0;
+  right: 4rem;
+}
+
+/*//Section----------*/
+
+section{
+  /* outline: 1px solid red; */
+  padding-block: 8rem;
+  position: relative;
+}
+
+.text-container{
+  width: 50%;
+  margin-bottom: 4rem;
+}
+
+.title{
+  font-size: 3rem;
+  color: var(--dark-grey);
+}
+
+.subtitle{
+  font-size: 1rem;
+  color: var(--yelow);
+}
+
+.text{
+  font-size: 1.3rem;
+  color: var(--grey);
+
+}
+
+.title,
+.text{
+  margin-bottom: 1rem;
+}
+
+
+/*//about---------------*/
+.flex-right{
+  display: flex;
+  justify-content: right;
+}
+
+.about-bkg{
+  background-image: url('./assets/about-background.png') ;
+  background-repeat: no-repeat;
+  background-position: left;
+  background-size: 20% 100%;
+}
+
+.about-banner{
+  position: absolute;
+  top: 8rem;
+  left: 4rem;
+  width: 28rem;
+}
+
+/*//work----------------*/
+
+.center{
+  margin-inline: auto;
+  text-align: center;
+}
+
+.info-container{
+  /* outline: 1px solid red; */
+  padding-inline: 15%;
+}
+
+/*//WorkCard --------------*/
+
+.work-container{
+  background-color: white;
+  color: var(--dark-grey);
+  width: 15rem;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  border-radius: 10px;
+}
+
+.work-title,
+.work-text{
+  margin-top: 1.5rem;
+}
+
+/*//TestimonialCard------*/
+
+.test-container{
+  width: 50rem;
+  border-radius: 10px;
+  padding: 2% 15%;
+}
+
+.test-photo{
+  width: 5rem;
+}
+
+.test-text{
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+
+.test-text,
+.test-name{
+  margin-block: 1.4rem;
+}
+
+.test-stars{
+  color: var(--yelow);
+  margin: auto;
+  gap: 0;
+  width: 10rem;
+  height: auto;
+}
+
+/*//Questions----------------*/
+.quest-input{
+  width: 50rem;
+  margin: 2rem auto 0 auto;
+}
+
+.quest-input input{
+  border: none;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.quest-input,
+.quest-input input{
+  border-radius: 30px;
+  padding: 1rem;
+}
+
+/*//Footer------------*/
+
+.footer-logo{
+  width: 8rem;
+  margin-bottom: 2rem;
+}
+
+.footer-list li{
+  margin-bottom: 1rem;
+}
+
+.footer-list-item:hover{
+  color: var(--yelow);
+  cursor: pointer;
+}
