@@ -27,21 +27,9 @@
 .card-box{
   border-radius: 15px;
   border: solid var(--black);
-  position: relative;
+  /* position: relative; */
 }
 
-/* .card-box::before{
-  content: "";
-  width: inherit;
-  height: inherit;
-  background-color: var(--black);
-  position: absolute;
-  left: 0.2rem;
-  top: 0.2rem;
-
-  z-index: -1;
-  border-radius: inherit;
-} */
 
 .dashed-box{
   border: 3px dashed var(--black);
@@ -361,7 +349,7 @@
 }
 
 .newTask-input{
-  padding-top: 2re  m;
+  padding-top: 2rem;
 }
 
 .newTask-input label{
@@ -369,6 +357,7 @@
 }
 
 .newTask-input input, select{
+  padding-left: 1rem;
   width: 100% !important;
   height: 2rem;
 }

@@ -146,7 +146,7 @@ export const Task = ({ task, onDelete, onEdit }) => {
 
         <div className="flex-btwn-center">
 
-            <p className="deadline"> 🕗 {deadlineMsg} </p>
+            <p className="deadline"> {deadlineMsg} </p>
 
             <button className={` icon-box pointer icon-box--rounded ${task.completed && "icon--confirm"}`}
                 onClick={() => handleComplete()}>
