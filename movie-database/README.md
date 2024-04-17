@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Movie Database
 
-Projeto front-end responsivo de um kanban board funcional.
+Projeto front-end responsivo de uma lista de filmes e base de filmes reponsiva.
 
 ## Layout Desktop
 
@@ -19,3 +19,5 @@ Projeto front-end responsivo de um kanban board funcional.
 ## Tecnologias usadas
 
 Javascript / Tailwind / ReactJS 
+OMDb API
+
