@@ -1,6 +1,6 @@
-# Movie Database
+# Kanban 
 
-Projeto front-end responsivo de um uma base de dados de filme responsiva.
+Projeto front-end responsivo de kanban funcional.
 
 ## Layout 
 
@@ -14,5 +14,4 @@ https://github.com/ZanderAlec/react-projects/assets/72523734/f774a389-0c3e-42b3-
 ## Tecnologias usadas
 
 Javascript / Tailwind / ReactJS 
-OMDb API
 
