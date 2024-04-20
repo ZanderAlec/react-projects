@@ -1,7 +1,7 @@
 import { Movie } from "./Movie";
 
 export const MovieList = ({watched, setSelectedMovieId}) => {
-    return <div>
+    return <div className="mx-4 flex p-2 gap-2 xl:gap-6  flex-wrap">
 
         {watched.length > 0 ? 
             watched.map((movie) => {

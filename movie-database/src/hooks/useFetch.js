@@ -5,38 +5,56 @@ export const useFetch = () => {
     const key = "ed7c69f1";
 
     const [queryList, setQueryList] = useState([]);
-    const [ queryId, setQueryId] = useState()
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const controller = new AbortController();
+
 
     const fetchMovie = async (path) => {
+        //Used to cleanUp the fetch
+
+        try{
+
         setError("");
         setIsLoading(true);
 
-        const res = await fetch(path);
+        const res = await fetch(
+            path, 
+            {signal: controller.signal}
+        );
 
         if (!res.ok)
-            setError("Something went wrong!");
+            throw new Error("Something went wrong!");
 
         const data = await res.json();
 
         if (data.Response === "False")
-            setError("Movie not found");
+            throw new Error("No results found");
 
-        setIsLoading(false);
+        setError("");
         return data;
+
+        }catch(err){
+
+            if(error.name !== "AbortError")
+            setError(err.message);
+
+        }finally{
+            
+            setIsLoading(false);
+        }
     }
 
     const fetchByQuery = async (query) => {
         setQueryList([]);
         const result = await fetchMovie(`https://www.omdbapi.com/?apikey=${key}&s=${query}`);
-        setQueryList(result.Search);
+        setQueryList(result? result.Search : result);
     }
 
     const fetchById = async (movieId) => {
         const result = await fetchMovie(`https://www.omdbapi.com/?apikey=${key}&i=${movieId}`);
-        return result;
+        return !error ? result : "";
     }
 
-    return [queryList, fetchByQuery, fetchById, error, isLoading];
+    return [queryList, fetchByQuery, fetchById, error, isLoading, controller];
 }

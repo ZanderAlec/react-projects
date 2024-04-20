@@ -1,21 +1,21 @@
 import { Header } from "./Header"
-import { Movie } from "./Movie"
+import { MovieList } from "./moviesList.js"
 import { Search } from "./assets/search.js";
 import { MovieInfo } from "./movieInfo.js"
 import { useState, useEffect } from "react";
 
 import { useFetch } from "./hooks/useFetch.js";
 import { WatchList } from "./Watchlist.js";
+import Error from "./Error.js"
+import Load from "./Load.js";
 
 export const MoviesPage = () => {
-
-    const key = "ed7c69f1";
 
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
     const [likedMovieList, setLikedMovieList] = useState([]); 
     const [watchedTime, setWatchedTime] = useState(0); 
-    const [queryList, fetchByQuery, fetchById, error, isLoading] = useFetch();
+    const [queryList, fetchByQuery, fetchById, error, isLoading, controller] = useFetch();
     const [watchList, setWatchList] = useState([]);
 
     function handleLikedMovie(id){
@@ -26,21 +26,32 @@ export const MoviesPage = () => {
         setSelectedMovieId(id);
     }
 
+    function handleCloseSelected(){
+        setSelectedMovieId(null);
+    }
+
     function removeLikedMovie(id){
-        setLikedMovieList(likedMovieList.filter((value) => value != id));
+        setLikedMovieList(likedMovieList.filter((value) => value !== id));
     }
 
     function searchWatchList(id){
-        const likedMovie =  likedMovieList.filter(value => value == id);
+        const likedMovie =  likedMovieList.filter(value => value === id);
         return likedMovie.length !== 0;
     }
 
-    useEffect(function () {
-
+    useEffect(function (){
         async function fetchMoviesQuery() {
             await fetchByQuery(query);
         }
 
+        fetchMoviesQuery();
+
+        return () => {
+            controller.abort();
+        }
+    }, [query]);
+
+    useEffect(function () {
         async function fetchMoviesLiked(){
 
             let tempList = [];
@@ -57,20 +68,14 @@ export const MoviesPage = () => {
             setWatchedTime(time);
         }
 
-
-        if(query)
-            fetchMoviesQuery();
-        else 
             fetchMoviesLiked()
         
-    }, [query, likedMovieList]);
-
+    }, [likedMovieList]);
 
     return (
         <div className={` bg-sky-950 `}>
-            <div class={` md:px-6 md:pb-9 relative flex flex-col items-stretch	
-                ${selectedMovieId  && "sm:w-[51%] lg:w-[67%] "} 
-                ${(!query || error) ? "h-screen" : "h-fit"}`}>
+            <div class={`h-screen md:px-6 md:pb-9 relative flex flex-col items-stretch	
+                ${selectedMovieId  && "sm:w-[51%] lg:w-[67%] "}`}>
 
                 <Header>
                     <Search query={query} setQuery={setQuery} />
@@ -78,12 +83,13 @@ export const MoviesPage = () => {
 
                 {/*Titulo e infos*/}
                 <div className="grow-0  flex flex-col lg:flex-row justify-between items-center	 py-10	">
-                    <h2 className="text-white text-2xl	md:text-4xl text-center lg:text-left break-words  px-2 ">
-                        {queryList ? `Results of ${query}` : "My Watchlist"}
+                    <h2 className="text-white text-2xl	md:text-4xl text-center lg:text-left break-words  px-2 uppercase ">
+                        {query ? `Results for  "${query}"` : "My watchlist"}
                     </h2>
 
                     <div className="flex justify-between text-1xl md:text-2xl	font-light text-white	">
-                        {queryList ? <h3 >Found {queryList.length} results</h3>
+                        {query ? 
+                            <h3 >Found {queryList ? queryList.length : "0"} results</h3>
                             : <div className="flex ">
                                 <h3 className="pr-2">🎬 {watchList.length} </h3>
                                 <h3>⏳{watchedTime} min</h3>
@@ -94,21 +100,20 @@ export const MoviesPage = () => {
 
                 {/*lista de filmes*/}
                 <div className="bg-sky-900 py-8  grow pl-2 sm:pl-0">
-                    <div className="  mx-auto flex sm:justify-center   gap-2 xl:gap-6  h-full  flex-wrap">
-                        
-                        {isLoading && "Loading"}
+                <div className="">
+                        {isLoading && <Load/>}
 
-                        {query && error && error}
+                        {query && error && <Error errorMsg = {error}/>}
 
-                        {query && !isLoading && !error && queryList.map((value) => {
-                            return <Movie setSelectedMovieId={() => { setSelectedMovieId(value.imdbID); }} movie={value}/>
-                        })}
+                        {/*query list */}
+                        {query && !isLoading && !error && 
+                            <MovieList setSelectedMovieId={handleSelectedMovie} watched={queryList}/>
+                        }
 
-
+                        {/*Liked list */}
                         {!query && <WatchList watched = {watchList} setSelectedMovieId={handleSelectedMovie}/>
                         } 
                          
-
                     </div>
                 </div>
 
@@ -116,9 +121,10 @@ export const MoviesPage = () => {
 
             {/*Filme selecionado*/}
             {selectedMovieId && 
-                <MovieInfo toggleClick={() => setSelectedMovieId(null)} 
+                <MovieInfo 
                 setLikedMovie = {handleLikedMovie} 
                 removeLikedMovie = {removeLikedMovie}
+                onClose = {handleCloseSelected}
                 selectedId={selectedMovieId}
                 isliked = {searchWatchList(selectedMovieId)}
                 />

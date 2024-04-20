@@ -3,17 +3,18 @@ import fillHeartIcon from "./assets/heart-icon-filled.png"
 import { useEffect, useState } from "react";
 import { useFetch } from "./hooks/useFetch";
 
-export const MovieInfo = ({ isliked, selectedId, toggleClick, setLikedMovie, removeLikedMovie}) => {
+export const MovieInfo = ({ isliked, selectedId, onClose, setLikedMovie, removeLikedMovie}) => {
 
     const [liked, setLiked] = useState(isliked);
     const [movieDetails, setMovieDetails] = useState({});
-    const [, , fetchById, , isLoading] = useFetch();
+    const [, , fetchById, ,] = useFetch();
 
     function handleLikeClick(){
         liked ? removeLikedMovie(selectedId) : setLikedMovie(selectedId);
         setLiked((prev) => !prev);
     }
 
+    //Get movie infos
     useEffect(function () {
         async function getMovieDetails() {
             const res = await fetchById(selectedId);
@@ -23,14 +24,39 @@ export const MovieInfo = ({ isliked, selectedId, toggleClick, setLikedMovie, rem
         }
 
         getMovieDetails();
-    }, [selectedId]);
+    }, [selectedId, fetchById, isliked]);
+
+
+    //Change page title
+    useEffect(() => {
+        document.title = `Movie | ${movieDetails.Title}`;
+
+        return () => {
+            document.title = 'Movie Database';
+        }
+
+    }, [movieDetails]);
+
+
+    useEffect(() => {
+        function callback(event){
+            if(event.code === 'Escape')
+            onClose();
+        }
+
+        document.addEventListener('keydown', callback);
+
+        return () => {
+            document.removeEventListener('keydown', callback);
+        }
+    }, [onClose]);
 
     return (
 
 
         <div className="bg-sky-800 w-full h-full sm:w-6/12 lg:w-4/12 fixed top-0 right-0 overflow-y-scroll">
 
-            <button className="text-black bg-white rounded-full text-2xl px-3 pb-1  absolute top-2 right-4" onClick={() => toggleClick()}>x</button>
+            <button className="text-black bg-white rounded-full text-2xl px-3 pb-1  absolute top-2 right-4" onClick={() => onClose()}>x</button>
             
             <div className=" mb-6 top-0  align-center ">
                 <div className="  w-full  h-2/5  md:h-[34rem]  ">
