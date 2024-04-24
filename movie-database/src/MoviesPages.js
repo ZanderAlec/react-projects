@@ -13,13 +13,23 @@ export const MoviesPage = () => {
 
     const [selectedMovieId, setSelectedMovieId] = useState(null);
     const [query, setQuery] = useState("");
-    const [likedMovieList, setLikedMovieList] = useState([]); 
     const [watchedTime, setWatchedTime] = useState(0); 
     const [queryList, fetchByQuery, fetchById, error, isLoading, controller] = useFetch();
     const [watchList, setWatchList] = useState([]);
 
+    //get the value of the localstorage
+    const [likedMovieList, setLikedMovieList] = useState(() => {
+        const storedValue = localStorage.getItem("watched");
+        // console.log(JSON.parse(storedValue));
+        // return JSON.parse(storedValue);
+        return [];
+    }); 
+
+
     function handleLikedMovie(id){
-        setLikedMovieList([id, ...likedMovieList])
+        setLikedMovieList((liked) => [...liked, id])
+
+        // localStorage.setItem("watched", JSON.stringify([...likedMovieList, id]));
     }
 
     function handleSelectedMovie(id){
@@ -58,6 +68,7 @@ export const MoviesPage = () => {
             let time = 0;
 
             for(let id of likedMovieList){
+                console.log(id);
 
                 const result = await fetchById(id);
                 time += parseInt(result.Runtime.slice(0,3));
@@ -68,9 +79,14 @@ export const MoviesPage = () => {
             setWatchedTime(time);
         }
 
-            fetchMoviesLiked()
+        fetchMoviesLiked()
         
     }, [likedMovieList]);
+
+
+    useEffect(() => {
+        localStorage.setItem("watched", JSON.stringify(likedMovieList));
+    }, [likedMovieList])
 
     return (
         <div className={` bg-sky-950 `}>

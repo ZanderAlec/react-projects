@@ -13,9 +13,8 @@ export const NewTask = ({
     const [priority, setPriority] = useState("");
     const [deadline, setDeadline] = useState("");
 
-    const [formateDate, formateTime] = UseFormatDate();
+    const [formateDate, formateTime] = UseFormatDate(task?.deadline);
 
-    // console.log(task);
 
     useEffect(() => {
 
@@ -26,8 +25,8 @@ export const NewTask = ({
         setTitle(task.title);
         setPriority(task.priority);
 
-        const fDate = formateDate(task.deadline);
-        const fTime = formateTime(task.deadline);
+        const fDate = formateDate();
+        const fTime = formateTime();
 
         console.log(fDate, fTime);
 

@@ -23,11 +23,11 @@ export const MovieInfo = ({ isliked, selectedId, onClose, setLikedMovie, removeL
             setMovieDetails(res);
         }
 
-        getMovieDetails();
-    }, [selectedId, fetchById, isliked]);
+        getMovieDetails();  
+    }, [selectedId]);
 
 
-    //Change page title
+    // Change page title
     useEffect(() => {
         document.title = `Movie | ${movieDetails.Title}`;
 

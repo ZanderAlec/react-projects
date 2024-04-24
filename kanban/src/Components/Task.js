@@ -14,7 +14,7 @@ import { CSS } from '@dnd-kit/utilities'
 export const Task = ({ task, onDelete, onEdit }) => {
     const [toggle, setToggle] = UseToggle();
     const [deadlineMsg, setDeadlineMsg] = useState("");
-    const [formateDate, formateTime] = UseFormatDate();
+    const [formateDate, formateTime] = UseFormatDate(task.deadline);
 
     const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
         id: task.id,
@@ -47,8 +47,8 @@ export const Task = ({ task, onDelete, onEdit }) => {
         const [day, month, year, hours, minutes] = [date.getDate(), date.getMonth(), date.getFullYear(), date.getHours(), date.getMinutes()];
         const [deadDay, deadMonth, deadYear, deadHour, deadMinute] = [task.deadline.getDate(), task.deadline.getMonth(), task.deadline.getFullYear(), task.deadline.getHours(), task.deadline.getMinutes()];
 
-        const formatedDate = formateDate(task.deadline);
-        const formatedTime = formateTime(task.deadline);
+        const formatedDate = formateDate();
+        const formatedTime = formateTime();
 
         //today
         if (day === deadDay && month === deadMonth && year === deadYear) {
