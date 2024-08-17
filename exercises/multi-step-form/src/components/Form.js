@@ -1,37 +1,49 @@
-import React, { useState } from 'react'
-import StepList from './StepList'
+import React from 'react'
 
-export default function Form() {
+export default function Form({steps, currStep}) {
 
-  const numSteps = 3;
-  const [currStep, setCurrStep] = useState(0);
-  function nextStep(){
-    setCurrStep(currStep + 1);
-  }
-
-  function previousStep(){
-    if(currStep-1 >= 0){
-      setCurrStep(currStep - 1);
-    }
-  }
-  
   return (
+
     <div>
+        <h2>
+           {steps[currStep].title}
+        </h2>
 
-        <StepList stepsNum = {3} currStep={currStep}/>
         <form>
-            <label for="">Example</label>
-            <input />
+           
+            {currStep === 0 && 
+            
+                <div>
+                    <label for="">Username</label>
+                    <input type="name" name="" value=""/>
+                </div>
+            }
+
+            {currStep === 1 && 
+                <div>
+                    <label for="">Email</label>
+                    <input type="email" name="" value=""/>
+                </div>
+            }
+
+            {currStep === 2 && 
+
+                <>
+                    <div>
+                        <label for="">Password</label>
+                        <input type="password" name="" value=""/>
+                    </div>
+
+                    <div>
+                        <label for="">Confirm Password</label>
+                        <input type="password" name="" value=""/>
+                    </div>
+                </>
+            }
+            
         </form>
-
-
-        <button disabled = {currStep === 0} onClick={() => previousStep()}>Previous</button>
-        { currStep !== numSteps - 1 ? 
-          <button onClick={() => nextStep()}>Next</button>
-          : <button > Finish</button>
-        }
-      
-
+        
     </div>
+
   )
 }
