@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import Step from './Step';
+import Step from "./step/Step"
+import './step/Step.css'
 
 export default function StepList({stepsNum, currStep}) {
 
@@ -12,8 +13,8 @@ export default function StepList({stepsNum, currStep}) {
             temp.push(
 
                 <Step 
-                    num = {i + 1} 
-                    checked = {i <= currStep && true}
+                    index = {i + 1} 
+                    style = {`step ${i <= currStep && "step-checked"}`}
                     />    
             );
         }
@@ -22,7 +23,7 @@ export default function StepList({stepsNum, currStep}) {
     }, [stepsNum, currStep]);
 
   return (
-    <div>
+    <div className=" step-list">
         {
             steps.map((value) => {
                 return value;

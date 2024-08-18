@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import StepList from './StepList'
-import Form from './Form';
+import Form from './form/Form';
 
 
 const steps = [
@@ -33,17 +33,32 @@ export default function FormPage() {
   }
   
   return (
-    <div>
-
+    <div className="container">
+      <div className='form-box'>
         <StepList stepsNum = {steps.length} currStep={currStep}/>
         <Form steps = {steps} currStep = {currStep}/>
 
+        <div className='flex'>
+          
+          <button 
+            disabled = {currStep === 0} 
+            onClick={() => previousStep()}
+            className='bttm'
+          >Previous</button>
+          
+          { 
+            currStep !== (steps.length - 1) ? 
+              <button 
+                onClick={() => nextStep()}
+                className='bttm'
+              >Next</button>
 
-        <button disabled = {currStep === 0} onClick={() => previousStep()}>Previous</button>
-        { currStep !== (steps.length - 1) ? 
-          <button onClick={() => nextStep()}>Next</button>
-          : <button > Finish</button>
-        }
+            : <button className='bttm'> Finish</button>
+          }
+
+        </div>
+        
+      </div>
       
 
     </div>

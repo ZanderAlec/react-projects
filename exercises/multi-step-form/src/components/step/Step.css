@@ -1,0 +1,54 @@
+.step-list{
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    margin: 0 1rem;
+}
+
+.step{
+    outline: 4px solid white;
+    border-radius: 50%;
+    padding: 0.4rem;
+    width: 2rem;
+    text-align: center;
+    position: relative;
+    background-color: lightgrey;
+}
+
+
+.step-list .step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    height: 50%;
+    width: 100vw;
+    z-index: -1;
+    border-top: 2px solid lightgrey;
+}
+
+
+.step-checked{
+    background-color: var(--blue);
+    color: white;
+}
+
+.step-list .step-checked:not(:first-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    height: 50%;
+    width: 100vw;
+    z-index: -1;
+    border-top: 2px solid var(--blue);
+}
+
+
+
+
+
+
+
+
+

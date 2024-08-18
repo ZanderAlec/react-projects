@@ -1,0 +1,22 @@
+.form-container{
+    margin-block: 1rem;
+}
+
+.input-box{
+    margin-block: 1rem;
+}
+
+.form-title{
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.label{
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.input{
+    width: 100%;
+    height: 1.5rem;
+}
