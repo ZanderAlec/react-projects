@@ -27,23 +27,8 @@
     justify-content: space-between;
 }
 
-
-.bttm{
-    padding: 0.5rem 2rem;
-    background-color: lightgrey;
-    color: black;
-    border: none;
-    border-radius: 4px;
+.justify-end{
+    justify-content: end;
 }
 
-.bttm:hover{
-    background-color: var(--blue);
-    color: white;
-    cursor: pointer;
-}
 
-.bttm:disabled{
-    background-color: lightgrey;
-    cursor: default;
-    color: grey;
-}

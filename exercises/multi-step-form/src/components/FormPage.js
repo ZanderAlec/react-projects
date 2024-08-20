@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import StepList from './StepList'
-import Form from './form/Form';
+
+import './forms/Form.css'
+import Username from './forms/Username';
+import Email from './forms/Email';
+import Password from './forms/Password';
 
 
 const steps = [
@@ -31,36 +35,31 @@ export default function FormPage() {
       setCurrStep(currStep - 1);
     }
   }
+
+  function renderForm(){
+    switch(currStep){
+      case 0:
+        return <Username nextStep = {nextStep}/>;
+      case 1:
+        return  <Email previousStep = {previousStep} nextStep = {nextStep}/>;
+      case 2:
+        return <Password previousStep = {previousStep} nextStep = {nextStep}/>;
+      default:
+        return null;
+    }
+  }
   
   return (
     <div className="container">
-      <div className='form-box'>
         <StepList stepsNum = {steps.length} currStep={currStep}/>
-        <Form steps = {steps} currStep = {currStep}/>
 
-        <div className='flex'>
-          
-          <button 
-            disabled = {currStep === 0} 
-            onClick={() => previousStep()}
-            className='bttm'
-          >Previous</button>
-          
-          { 
-            currStep !== (steps.length - 1) ? 
-              <button 
-                onClick={() => nextStep()}
-                className='bttm'
-              >Next</button>
+        <div className='form-container'>
+          <h2 className='form-title'>
+            {steps[currStep].title}
+          </h2>
 
-            : <button className='bttm'> Finish</button>
-          }
-
-        </div>
-        
-      </div>
-      
-
+          {renderForm()}
+        </div>  
     </div>
   )
 }

@@ -15,7 +15,6 @@
     background-color: lightgrey;
 }
 
-
 .step-list .step:not(:last-child)::before {
     content: "";
     position: absolute;
