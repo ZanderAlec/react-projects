@@ -1,19 +1,32 @@
 import React from 'react'
-import './Form.css'
+import { Form, Formik } from 'formik'
+import * as yup from 'yup';
 
+import Input from '../Input';
+import '../Form.css'
 
-export default function Password({previousStep, nextStep}) {
+const schema = yup.object().shape({
+  password: yup.string().min(8).max(20).required(),
+  confirmPassword: yup.string().oneOf([yup.ref("password"), null], "Passwords Don't Match.").required("Passwords Don't Match.")
+});
+
+export default function Password({previousStep, nextStep, data}) {
+
+  const handleSubmit = (values) => {
+    nextStep(values);
+  }
+
   return (
-    <form>
-        <div className='input-box'>
-            <label className='label' for="">Password</label>
-            <input className="input" type="password" name="" value=""/>
-        </div>
+    <Formik 
+      initialValues={data}
+      onSubmit={handleSubmit}
+      validationSchema={schema}
+    >
 
-        <div className='input-box'>
-            <label className='label' for="">Confirm Password</label>
-            <input className="input" type="password" name="" value=""/>
-        </div>
+      {() => (<Form>
+
+        <Input  name = "password" type = "text" label = "password" required={true}/>      
+        <Input  name = "confirmPassword" type = "text" label = "confirmPassword" required={true}/>   
 
         <div className='flex'>
           <button 
@@ -21,8 +34,9 @@ export default function Password({previousStep, nextStep}) {
               className='bttm bttm bttm-previous'
             >Previous</button>
 
-          <button className='bttm bttm-next'> Finish</button>
+          <button type="submit" className='bttm bttm-next'> Finish</button>
         </div>
-    </form>
+      </Form>)}
+    </Formik>
   )
 }

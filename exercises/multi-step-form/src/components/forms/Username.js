@@ -1,20 +1,39 @@
 import React from 'react'
-import './Form.css'
+import { Form, Formik } from 'formik'
+import * as yup from 'yup';
 
-export default function Username({nextStep}) {
+import Input from '../Input'
+import '../Form.css'
+  
+  
+const schema = yup.object().shape({
+  username: yup.string().required("Can't be blank!"),
+});
+
+export default function Username({nextStep, data}) {
+
+
+  const handleSubmit = (values) => {
+    nextStep(values);
+  }
+
   return (
-    <form>
-        <div className='input-box'>
-            <label className='label' for="">Username</label>
-            <input className="input" type="name" name="" value=""/>
-        </div>
+    <Formik 
+      initialValues={data}
+      onSubmit={handleSubmit}
+      validationSchema={schema}
+    >
 
-        <div className='flex justify-end'>
-          <button 
-            onClick={() => nextStep()}
-            className='bttm bttm-next'
-          >Next</button>
-        </div>
-    </form>
+      {() => (
+        <Form>
+          <Input name = "username" type="text" label = "username" required={true}/>
+
+          <div className='flex justify-end'>
+            <button type = "submit" className='bttm bttm-next' >Next</button>
+          </div>
+        </Form>
+      )}
+
+    </Formik>
   )
 }
